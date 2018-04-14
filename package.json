@@ -4,6 +4,8 @@
   "description": "This is the main repository for the CS 290 Final Project: `Message In a Bottle`.",
   "main": "index.js",
   "scripts": {
+    "start": "NODE_ENV='development' nodemon app.js",
+    "start-prod": "NODE_ENV=production sudo nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

@@ -1,7 +1,7 @@
 const config = {
   'production': {
     'PORT': 8080,
-    'secret':'message-in-a-bottle',
+    'secret': process.env.PRODUCTION_SECRET,
     'database': 'mongodb://localhost:27017/message-in-a-bottle',
     'options': {
       useMongoClient: true
@@ -9,7 +9,7 @@ const config = {
   },
   'development': {
     'PORT': 3000,
-    'secret':'message-in-a-bottle',
+    'secret': process.env.DEVELOPMENT_SECRET,
     'database': 'mongodb://localhost:27017/dev',
     'options': {
       useMongoClient: true
@@ -17,7 +17,7 @@ const config = {
   },
   'test': {
     'PORT': 3001,
-    'secret':'test',
+    'secret': process.env.TEST_SECRET,
     'database': 'mongodb://localhost/test',
     'options': {
       useMongoClient: true
