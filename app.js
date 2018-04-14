@@ -54,7 +54,7 @@ app.use('/api', auth)
 app.use('/api', router)
 
 // create admin user
-if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'production') { seed() }
+// if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'production') { seed() }
 
 // Initialize Passport.js
 app.use(passport.initialize())
