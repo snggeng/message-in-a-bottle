@@ -1,0 +1,20 @@
+{
+  "name": "final-project",
+  "version": "1.0.0",
+  "description": "This is the main repository for the CS 290 Final Project: `Message In a Bottle`.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/duke-compsci290-spring2018/final-project-team-36.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/duke-compsci290-spring2018/final-project-team-36/issues"
+  },
+  "homepage": "https://github.com/duke-compsci290-spring2018/final-project-team-36#readme"
+}
