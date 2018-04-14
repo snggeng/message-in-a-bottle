@@ -16,5 +16,13 @@
   "bugs": {
     "url": "https://github.com/duke-compsci290-spring2018/final-project-team-36/issues"
   },
-  "homepage": "https://github.com/duke-compsci290-spring2018/final-project-team-36#readme"
+  "homepage": "https://github.com/duke-compsci290-spring2018/final-project-team-36#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.3",
+    "mongoose": "^5.0.14",
+    "morgan": "^1.9.0",
+    "npm": "^5.8.0",
+    "passport": "^0.4.0"
+  }
 }
