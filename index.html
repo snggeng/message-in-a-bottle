@@ -1,23 +1,94 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8" />
-<meta http-equiv="x-ua-compatible" content="ie=edge, chrome=1" />
-<title>Geng and Kora's Final Project</title>
-<link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">
-<script
-  src="https://code.jquery.com/jquery-3.1.1.min.js"
-  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-  crossorigin="anonymous"></script>
-<script src="semantic/dist/semantic.min.js"></script>
-</head>
-<body>
-<h1>Message In A Bottle</h1>
-<p>Authors: Geng Sng, Kora Kwok</p>
-<h2>Project Description</h2>
-<p>
-We would like to build an online message-in-a-bottle platform similagir to paperplanes.world. Essentially, users will be able to place short messages inside virtual bottles. Users can retrieve a bottle at random, read the message contained inside, and add their own message. This is interesting because it's a platform that can connect people all over the world. Ideally we'd like to implement some cool visualizations to make the platform look aesthetic (explore tools like three.js). Our data sources will be the user-inputted messages, but other ways we could incorporate existing data sources could be scraping text from popular sites (reddit, etc) to fill initial bottles, or making the 'ocean' environment dependent on real-time data sources like weather.
-</p>
-<script src=""></script>
-</body>
+<html>
+  <head>
+    <title>Yooooooo</title>
+    <meta name="description" content="Hello, WebVR! - A-Frame">
+    <script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-physics-system@1.4.0/dist/aframe-physics-system.min.js"></script>
+    <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v4.0.2/dist/aframe-extras.min.js"></script>
+    <script src="https://unpkg.com/aframe-animation-component@3.2.1/dist/aframe-animation-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-particle-system-component@1.0.x/dist/aframe-particle-system-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-outline@%5E1.1.0/build/aframe-outline.min.js"></script>
+    <script src="https://unpkg.com/aframe-event-set-component@^4.0.0/dist/aframe-event-set-component.min.js"></script> 
+    <script>
+      AFRAME.registerComponent('random-boxes', {
+        init: function () {
+          // Solution for Creating Entities.
+          var sceneEl = document.querySelector('a-scene'); 
+          for (var i = 0; i < 50; i++) {
+            var boxEl = document.createElement('a-box');
+            boxEl.setAttribute('material', {color: '#EF2D5E'});
+            boxEl.setAttribute('position', {x: Math.random() * 20 - 10, y: Math.random() * 20 - 10, z: Math.random() * 20 - 10});
+            boxEl.setAttribute('scale', {x: Math.random() / 2, y: Math.random() / 2, z: Math.random() / 2});
+            sceneEl.appendChild(boxEl);
+          }
+        }
+      });
+    </script>
+  </head>
+  <body>
+     <a-scene id="scene" random-boxes physics>         
+<!--     <a-scene id="scene" random-boxes physics; fog="type: exponential; color: #FFF; density: 0.06;">  -->
+      <a-assets>
+        <img id="groundTexture" src="https://cdn.aframe.io/a-painter/images/floor.jpg" alt="">
+        <img id="woodTexture" src="https://i.imgur.com/aXY59Sf.jpg" alt="">
+        <img id="skyTexture" src="https://cdn.aframe.io/a-painter/images/sky.jpg" alt="">
+      </a-assets>
+      <!--Text-->
+      <a-text value="hello darkness my old friend" color="#111" position="0 2.5 -4" align="center"></a-text>
+      <!--Weather-->
+      <a-entity id="weather" particle-system="preset: snow; particleCount: 100000; color: #ffffff"></a-entity>
+      <a-box position="-4 3 -5" rotation="0 0 0" color="#528ff2" static-body
+       event-set__enter="_event: mouseenter; _target: #weather; particle-system.preset: rain">
+       <a-text id="rainBoxText" value="The Rainmaker" align="center" color="#FFF" visible="true" position="0 1 0" geometry="primitive: plane; width: 2.5" material="color: #333"></a-text>
+      </a-box>
+      <a-box position="0 3 -5" rotation="0 0 0" color="#528ff2" static-body
+       event-set__enter="_event: mouseenter; _target: #weather; particle-system.preset: snow">
+       <a-text id="rainBoxText" value="The Snowmachine" align="center" color="#FFF" visible="true" position="0 1 0" geometry="primitive: plane; width: 2.5" material="color: #333"></a-text>
+      </a-box>
+      <a-box position="4 3 -5" rotation="0 0 0" color="#528ff2" static-body
+       event-set__enter="_event: mouseenter; _target: #weather; particle-system.preset: dust">
+       <a-text id="rainBoxText" value="Bring the Dust" align="center" color="#FFF" visible="true" position="0 1 0" geometry="primitive: plane; width: 2.5" material="color: #333"></a-text>
+      </a-box>
+
+      <!--Ocean + Ground-->
+      <a-ocean width="50" depth="50" density="40" position="" rotation="" scale="" visible="" ocean=""></a-ocean>
+      <a-plane position="0 -1 0" rotation="-90 0 0" width="50" height="50" color="#b76040" static-body></a-plane>
+      <!--Standing latform-->
+      <a-box position="0 0 0" height="1" width="3" depth="3" src="#woodTexture" static-body></a-box>
+      <!--Objects-->
+      <a-box position="-4 0 -5" rotation="0 0 0" color="#f75659" static-body
+        event-set__click="color: #528ff2"       
+        event-set__enter="_event: mouseenter; _target: #box1Text; visible: true" 
+       event-set__leave="_event: mouseleave; _target: #box1Text; visible: false">
+        <a-text id="box1Text" value="This is box 1" align="center" color="#FFF" visible="false" position="0 1 0" geometry="primitive: plane; width: 2.5" material="color: #333">
+        </a-text>
+      </a-box>
+
+      <a-box position="0 0 -5" rotation="0 0 0" color="#f75659" static-body
+       event-set__enter="_event: mouseenter; _target: #box2Text; visible: true" 
+       event-set__leave="_event: mouseleave; _target: #box2Text; visible: false">
+        <a-text id="box2Text" value="This is box 2" align="center" color="#FFF" visible="false" position="0 1 0" geometry="primitive: plane; width: 2.5" material="color: #333"></a-text>
+      </a-box>
+
+      <a-box position="4 0 -5" rotation="0 0 0" color="#f75659" static-body
+       event-set__enter="_event: mouseenter; _target: #box3Text; visible: true" 
+       event-set__leave="_event: mouseleave; _target: #box3Text; visible: false">
+        <a-text id="box3Text" value="This is box 3" align="center" color="#FFF" visible="false" position="0 1 0" geometry="primitive: plane; width: 2.5" material="color: #333"></a-text>
+      </a-box>
+
+      <a-torus-knot color="#B84A39" arc="180" p="2" q="7" radius="1" radius-tubular="0.05"></a-torus-knot>
+
+  
+
+
+      <!-- ADD WEATHER CHANGE; BOTTLE CLICK; embedded
+      
+<a-sky color="#FFC65D""></a-sky> -->
+      <!--Camera-->
+      <a-camera position="0 1.6 0">
+        <a-cursor></a-cursor>
+      </a-camera>
+    </a-scene>
+  </body>
 </html>
