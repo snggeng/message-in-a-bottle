@@ -135,8 +135,8 @@ if(!module.parent){
   // https encryption
   if (process.env.NODE_ENV === 'production') {
     https.createServer({
-      cert: fs.readFileSync('/etc/letsencrypt/live/vcm-2849.vm.duke.edu/fullchain.pem'),
-      key: fs.readFileSync('/etc/letsencrypt/live/vcm-2849.vm.duke.edu/privkey.pem')
+      cert: fs.readFileSync('/etc/letsencrypt/live/vcm-4000.vm.duke.edu/fullchain.pem'),
+      key: fs.readFileSync('/etc/letsencrypt/live/vcm-4000.vm.duke.edu/privkey.pem')
     }, app).listen(443)
   } else {
     app.listen(config.PORT || 3000)

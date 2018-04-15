@@ -1,0 +1,2 @@
+# mongod --dbpath db
+mongod --dbpath db --logpath ~/log/mongod.log
