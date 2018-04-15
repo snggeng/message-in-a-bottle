@@ -25,6 +25,9 @@ const UserSchema = new Schema({
     default: false,
     required: true
   },
+  bottles: {
+    type: [String],
+  },
   first_name: {
     type: String
   },
@@ -65,24 +68,6 @@ UserSchema.pre('save', function(next) {
     return next()
   }
 })
-
-// UserSchema.post('save', function(doc) {
-//   let user = this
-//
-//   OrderCart.find({ user_id: user._id }, (err, order_carts) => {
-//
-//     if(order_carts.length === 0) {
-//       OrderCart.create({ user_id: user._id, ingredients: [] }, (err, order_cart) => {
-//         if (err) return errorMessage('create order_cart', err)
-//         order_cart.save((err, order_cart) => {
-//           // console.log('OrderCart successfully created.')
-//         })
-//       })
-//     }
-//   })
-// })
-
-// UserSchema.post('save', handleE11000)
 
 // Verify user based on salt/hash result
 UserSchema.methods.comparePassword = async function(passw) {
