@@ -8,7 +8,7 @@ const config = require('../config')(process.env.NODE_ENV) // get db config file
 module.exports = (passport) => {
   var opts = {}
   opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken()
-  opts.secretOrKey = config.secret
+  opts.secretOrKey = process.env.DEVELOPMENT_SECRET
   passport.use(new JwtStrategy(opts, (jwt_payload, done) => {
     User.findOne({id: jwt_payload.id}, (err, user) => {
       if (err) {
