@@ -98,57 +98,53 @@ $('#transparent').setAttribute('material', 'opacity: 0.0; transparent: true')
 
 // BOTTLES
 
-var sceneEl = $('a-scene'); 
-for (let bottle of bottles) {
-  let bottleEl = document.createElement('a-entity');
-  let x = Math.random()*35-25;
-  let y = -0.7;
-  let z = Math.random()*43-25;
-  //In case bottle is too close to platform
-  // if (Math.abs(x) <= 4) { x = (x+1)*3}
-  // if (Math.abs(z) <= 4) { z = (z+1)*3}
-  bottleEl.className = 'bottle'
-  bottleEl.setAttribute('gltf-model', "#bottle-3d");
-  bottleEl.setAttribute('position', {x: x, y: y, z: z});
-  bottleEl.setAttribute('rotation', {x: 20, y: 20, z: 20});
-  bottleEl.setAttribute('scale', {x: 0.1, y: 0.1, z: 0.1});
-  let animation = document.createElement('a-animation')
-  animation.setAttribute('attribute', 'position')
-  animation.setAttribute('dur', '3000')
-  animation.setAttribute('from',  `${x} ${y} ${z}`)
-  animation.setAttribute('to',  `${x} ${y + shiftVariation()} ${z}`)
-  animation.setAttribute('direction', 'alternate-reverse')
-  animation.setAttribute('repeat', 'indefinite')
-  bottleEl.appendChild(animation)
-  let textEl = document.createElement('a-text');
-  textEl.setAttribute('value', bottle.name);
-  textEl.setAttribute('align', "center");
-  textEl.setAttribute('color', "#fff");
-  textEl.setAttribute('side', "double");
-  textEl.setAttribute('position', {x: x-0.2, y: y+1.5, z: z});
-  textEl.setAttribute('geometry', {primitive: 'plane', width: 1.2, height: 0.3, side: "double"});
-  textEl.setAttribute('material',{color: "#528ff2", side: "double"});
-  // set modal on click trigger
-  textEl.setAttribute('data-toggle', 'modal') 
-  textEl.setAttribute('data-target', '#exampleModal')
-  textEl.addEventListener('click', function (event) {
-    //   $('.ui.modal').modal('show')
-    let cameraEntity = $('#camera')
-    // cameraEntity.setAttribute('camera', 'active', false)
-        sceneEl.enterVR();
-        sceneEl.exitVR();
-       
-        // sceneEl.exitVR();
-      console.log(event.detail)
-    });
-  sceneEl.append(textEl);  
-  sceneEl.appendChild(bottleEl);
-}
-// AFRAME.registerComponent('random-bottles', {
-//     init: function () {
-
-//     }
-//   })
+AFRAME.registerComponent('random-bottles', {
+    init: function () {
+        var sceneEl = $('a-scene'); 
+        for (let bottle of bottles) {
+          let bottleEl = document.createElement('a-entity');
+          let x = Math.random()*35-25;
+          let y = -0.7;
+          let z = Math.random()*43-25;
+          //In case bottle is too close to platform
+          // if (Math.abs(x) <= 4) { x = (x+1)*3}
+          // if (Math.abs(z) <= 4) { z = (z+1)*3}
+          bottleEl.className = 'bottle'
+          bottleEl.setAttribute('gltf-model', "#bottle-3d");
+          bottleEl.setAttribute('position', {x: x, y: y, z: z});
+          bottleEl.setAttribute('rotation', {x: 20, y: 20, z: 20});
+          bottleEl.setAttribute('scale', {x: 0.1, y: 0.1, z: 0.1});
+          let animation = document.createElement('a-animation')
+          animation.setAttribute('attribute', 'position')
+          animation.setAttribute('dur', '3000')
+          animation.setAttribute('from',  `${x} ${y} ${z}`)
+          animation.setAttribute('to',  `${x} ${y + shiftVariation()} ${z}`)
+          animation.setAttribute('direction', 'alternate-reverse')
+          animation.setAttribute('repeat', 'indefinite')
+          bottleEl.appendChild(animation)
+          let textEl = document.createElement('a-text');
+          textEl.setAttribute('value', bottle.name);
+          textEl.setAttribute('align', "center");
+          textEl.setAttribute('color', "#fff");
+          textEl.setAttribute('side', "double");
+          textEl.setAttribute('position', {x: x-0.2, y: y+1.5, z: z});
+          textEl.setAttribute('geometry', {primitive: 'plane', width: 1.2, height: 0.3, side: "double"});
+          textEl.setAttribute('material',{color: "#528ff2", side: "double"});
+          // set modal on click trigger
+          textEl.setAttribute('data-toggle', 'modal') 
+          textEl.setAttribute('data-target', '#exampleModal')
+          textEl.addEventListener('click', function (event) {
+                // setTimeout(sceneEl.exitVR.bind(this), 1000);
+                let esc =  new Event('keydown')
+                esc.keyCode = 27
+                setTimeout(sceneEl.dispatchEvent(esc), 1000)
+                // console.log(event.detail)
+            });
+          sceneEl.append(textEl);  
+          sceneEl.appendChild(bottleEl);
+        }
+    }
+  })
 
 let bottleItems = document.getElementsByClassName('bottle')
 // Array.from(bottleItems).map(b => b.getAttribute('position')).map(b => console.log(b))
