@@ -68,7 +68,8 @@ $ = (queryString) => document.querySelector(queryString)
 
 const shiftHue = (hue) => (hue + 1) % 360
 const getColor = (hue) => `hsl(${hue}, 100%, 50%)`
-const shiftVariation = () => Math.sin(Date.now() / 1000)*0.2 - 0.3
+const getRandomArbitrary = (min, max) => Math.random() * (max - min) + min
+const shiftVariation = () => Math.sin(Date.now() / 1000) * getRandomArbitrary(0.2, 0.5)
 const shiftPosition = (x, y, z) => `${x} ${y} ${z}`
 
 let hue = 0
@@ -112,6 +113,14 @@ for (let bottle of bottles) {
   bottleEl.setAttribute('position', {x: x, y: y, z: z});
   bottleEl.setAttribute('rotation', {x: 20, y: 20, z: 20});
   bottleEl.setAttribute('scale', {x: 0.1, y: 0.1, z: 0.1});
+  let animation = document.createElement('a-animation')
+  animation.setAttribute('attribute', 'position')
+  animation.setAttribute('dur', '3000')
+  animation.setAttribute('from',  `${x} ${y} ${z}`)
+  animation.setAttribute('to',  `${x} ${y + shiftVariation()} ${z}`)
+  animation.setAttribute('direction', 'alternate-reverse')
+  animation.setAttribute('repeat', 'indefinite')
+  bottleEl.appendChild(animation)
   var textEl = document.createElement('a-text');
   textEl.setAttribute('value', bottle.name);
   textEl.setAttribute('align', "center");
@@ -131,18 +140,18 @@ for (let bottle of bottles) {
 //   })
 
 let bottleItems = document.getElementsByClassName('bottle')
-Array.from(bottleItems).map(b => b.getAttribute('position')).map(b => console.log(b))
+// Array.from(bottleItems).map(b => b.getAttribute('position')).map(b => console.log(b))
 const animate = () => {
     hue = shiftHue(hue)
     const color = getColor(hue)
    
     $('a-sky').setAttribute('color', color)
-    for (let bottle of bottleItems) {
-        let pos = bottle.getAttribute('position')
+    // for (let bottle of bottleItems) {
+    //     let pos = bottle.getAttribute('position')
         // console.log(pos)
-        const position = shiftPosition(pos.x, shiftVariation(), pos.z)
+        // const position = shiftPosition(pos.x, shiftVariation(), pos.z)
         // bottle.setAttribute('position', position)
-    }
+    // }
 
     requestAnimationFrame(animate)
 }
