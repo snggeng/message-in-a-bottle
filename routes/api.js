@@ -26,12 +26,4 @@ router.put('/bottles/:id', permit('admin'), bottleController.updateBottle)
 router.delete('/bottles/:id', permit('admin'), bottleController.deleteBottle)
 router.get('/bottles/:user_id', permit('admin', 'user'), bottleController.getBottlesByUser)
 
-createBottle,
-getAll,
-getPaginated,
-getBottle,
-updateBottle,
-deleteBottle,
-getBottlesByUser
-
 module.exports = router
