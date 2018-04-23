@@ -99,12 +99,11 @@ $('#transparent').setAttribute('material', 'opacity: 0.0; transparent: true')
 // BOTTLES
 
 var sceneEl = $('a-scene'); 
-console.log(bottles)
 for (let bottle of bottles) {
-  var bottleEl = document.createElement('a-entity');
-  var x = Math.random()*35-25;
-  var y = -0.7;
-  var z = Math.random()*43-25;
+  let bottleEl = document.createElement('a-entity');
+  let x = Math.random()*35-25;
+  let y = -0.7;
+  let z = Math.random()*43-25;
   //In case bottle is too close to platform
   // if (Math.abs(x) <= 4) { x = (x+1)*3}
   // if (Math.abs(z) <= 4) { z = (z+1)*3}
@@ -121,7 +120,7 @@ for (let bottle of bottles) {
   animation.setAttribute('direction', 'alternate-reverse')
   animation.setAttribute('repeat', 'indefinite')
   bottleEl.appendChild(animation)
-  var textEl = document.createElement('a-text');
+  let textEl = document.createElement('a-text');
   textEl.setAttribute('value', bottle.name);
   textEl.setAttribute('align', "center");
   textEl.setAttribute('color', "#fff");
@@ -129,7 +128,19 @@ for (let bottle of bottles) {
   textEl.setAttribute('position', {x: x-0.2, y: y+1.5, z: z});
   textEl.setAttribute('geometry', {primitive: 'plane', width: 1.2, height: 0.3, side: "double"});
   textEl.setAttribute('material',{color: "#528ff2", side: "double"});
-  textEl.addEventListener('click', function (event) {console.log("Hello friend", event.detail)});
+  // set modal on click trigger
+  textEl.setAttribute('data-toggle', 'modal') 
+  textEl.setAttribute('data-target', '#exampleModal')
+  textEl.addEventListener('click', function (event) {
+    //   $('.ui.modal').modal('show')
+    let cameraEntity = $('#camera')
+    // cameraEntity.setAttribute('camera', 'active', false)
+        sceneEl.enterVR();
+        sceneEl.exitVR();
+       
+        // sceneEl.exitVR();
+      console.log(event.detail)
+    });
   sceneEl.append(textEl);  
   sceneEl.appendChild(bottleEl);
 }
@@ -144,15 +155,9 @@ let bottleItems = document.getElementsByClassName('bottle')
 const animate = () => {
     hue = shiftHue(hue)
     const color = getColor(hue)
-   
     $('a-sky').setAttribute('color', color)
-    // for (let bottle of bottleItems) {
-    //     let pos = bottle.getAttribute('position')
-        // console.log(pos)
-        // const position = shiftPosition(pos.x, shiftVariation(), pos.z)
-        // bottle.setAttribute('position', position)
-    // }
 
+    // animate
     requestAnimationFrame(animate)
 }
 
