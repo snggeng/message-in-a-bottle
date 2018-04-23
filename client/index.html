@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Message in a Bottle</title>
+    <meta name="description" content="Message in a Bottle - WebVR Experiment">
+    <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
+    <script src="//cdn.rawgit.com/donmccurdy/aframe-physics-system/v2.1.0/dist/aframe-physics-system.min.js"></script>
+    <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v4.0.2/dist/aframe-extras.min.js"></script>
+    <script src="https://unpkg.com/aframe-animation-component@4.0.0/dist/aframe-animation-component.min.js"></script> 
+    <script src="https://unpkg.com/aframe-particle-system-component@1.0.x/dist/aframe-particle-system-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-outline@%5E1.1.0/build/aframe-outline.min.js"></script>
+    <script src="https://unpkg.com/aframe-event-set-component@^4.0.0/dist/aframe-event-set-component.min.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.25.0/ramda.min.js"></script>
+  </head>
+  <body>
+     <a-scene id="scene" random-bottles physics="debug:true">       
+<!--     <a-scene id="scene" random-boxes physics; fog="type: exponential; color: #FFF; density: 0.06;">  -->
+      <a-assets>
+        <img id="groundTexture" src="https://cdn.aframe.io/a-painter/images/floor.jpg" alt="">
+        <img id="woodTexture" src="https://i.imgur.com/aXY59Sf.jpg" alt="">
+        <img id="skyTexture" src="https://cdn.aframe.io/a-painter/images/sky.jpg" alt="">
+         <a-asset-item id="bottle-3d" src="./glass_bottle/scene.gltf"></a-asset-item>
+      </a-assets>
+      <!-- Sky -->
+      <a-sky></a-sky>
+      <!--Ocean + Ground-->
+      <a-ocean></a-ocean>
+      <a-plane id="opaque" static-body></a-plane>
+      <!--Transparent ground for player to walk on. Because we are using the physics engine to create physical boundaries to the ocean, we need this transparent plane to prevent the player from falling into the bottom of the ocean.-->
+      <a-plane id="transparent" static-body></a-plane>
+
+
+      <!-- <a-box position="-4 3 -5" rotation="0 0 0" color="#528ff2" static-body>
+       <a-text id="rainBoxText" value="The Rainmaker" align="center" color="#FFF" visible="true" position="0 1 0" geometry="primitive: plane; width: 2.5" material="color: #333"></a-text>
+      </a-box> -->
+
+      <!--Standing Platform-->
+      <!-- <a-box position="0 0 0" height="0.6" width="3" depth="3" src="#woodTexture" static-body></a-box> -->
+
+      <!-- Wall Boundaries: Left, Right, Front, Back -->
+      <!-- <a-box position="-25 -1 0" width="1" height="10" depth="50" material="opacity: 0.0; transparent: true" static-body></a-box> 
+      <a-box position="25 -1 0"  width="1" height="10" depth="50" material="opacity: 0.0; transparent: true" static-body></a-box>
+      <a-box position="0 -1 25" width="50" height="10" depth="1" material="opacity: 0.0; transparent: true" static-body></a-box>
+      <a-box position="0 -1 -25" width="50" height="10" depth="1" material="opacity: 0.0; transparent: true" static-body></a-box> -->
+
+
+      <!--Camera-->
+      <a-entity id="rig" movement-controls kinematic-body>
+        <a-entity id="camera" camera position="0 1.4 0" look-controls="pointerLockEnabled: true">
+          <a-cursor></a-cursor>
+        </a-entity>
+      </a-entity>
+
+    </a-scene>
+    <script src="index.js"></script>
+  </body>
+</html>
