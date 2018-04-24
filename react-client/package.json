@@ -7,8 +7,11 @@
     "aframe-animation-component": "^4.1.2",
     "aframe-particle-system-component": "^1.0.11",
     "aframe-react": "^4.4.0",
+    "babel-polyfill": "^6.26.0",
     "react": "^16.3.2",
-    "react-dom": "^16.3.2"
+    "react-dom": "^16.3.2",
+    "semantic-ui-css": "^2.3.1",
+    "semantic-ui-react": "^0.79.1"
   },
   "devDependencies": {
     "react-scripts": "1.1.4"

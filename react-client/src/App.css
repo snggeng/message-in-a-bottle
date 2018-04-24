@@ -26,3 +26,27 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+* {
+  box-sizing: border-box; 
+}
+
+body {
+  background: #f7f7f7;
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: row;
+  padding: 40px 5%;
+  min-height: 100vh;
+}
+  
+.flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex-direction: column;
+  padding: 20px;
+}
