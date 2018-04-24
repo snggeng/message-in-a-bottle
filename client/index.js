@@ -135,9 +135,9 @@ AFRAME.registerComponent('random-bottles', {
           textEl.setAttribute('data-target', '#exampleModal')
           textEl.addEventListener('click', function (event) {
                 // setTimeout(sceneEl.exitVR.bind(this), 1000);
-                let esc =  new Event('keydown')
-                esc.keyCode = 27
-                setTimeout(sceneEl.dispatchEvent(esc), 1000)
+                // let esc =  new Event('keydown')
+                // esc.keyCode = 27
+                // setTimeout(sceneEl.dispatchEvent(esc), 1000)
                 // console.log(event.detail)
             });
           sceneEl.append(textEl);  

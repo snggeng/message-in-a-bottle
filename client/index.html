@@ -22,8 +22,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   </head>
-  <body>
-     <a-scene id="scene" random-bottles physics="debug:true">       
+  <body style="display:flex">
+    <div style="width: 50vw">
+     <a-scene id="scene" random-bottles physics="debug:true" embedded>       
       <a-assets>
         <img id="groundTexture" src="https://cdn.aframe.io/a-painter/images/floor.jpg" alt="">
         <img id="woodTexture" src="https://i.imgur.com/aXY59Sf.jpg" alt="">
@@ -55,14 +56,16 @@
 
       <!--Camera-->
       <a-entity id="rig" movement-controls kinematic-body>
-        <a-entity id="camera" camera position="0 1.4 0" look-controls="pointerLockEnabled: true">
-          <a-cursor></a-cursor>
+        <a-entity id="camera" position="0 1.4 0" look-controls cursor="rayOrigin: mouse">
+          <!-- <a-cursor></a-cursor> -->
         </a-entity>
       </a-entity>
 
     </a-scene>
+   </div>
+    <div>Hello world!</div>
     <!-- View Bottle Modal -->
-    <div class="ui modal" id="view-bottle-modal">
+    <!-- <div class="ui modal" id="view-bottle-modal">
       <div class="header">View Bottle</div>
       <div class="content">
         <p>some text</p>
@@ -72,7 +75,7 @@
         <div class="ui button">Neutral</div>
         <div class="ui cancel button">Cancel</div>
       </div>
-    </div>
+    </div> -->
     <!-- Button trigger modal -->
     <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
       Launch demo modal
