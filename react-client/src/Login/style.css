@@ -1,0 +1,19 @@
+.Login-header {
+    font-weight: 900;
+    color: #E1E8ED;
+  }
+  
+  .Login-input {
+    margin: 10px;
+  }
+  
+  .Login-info-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+  
+  .Login-info-heart {
+    color: #DB3737;
+  }
+  

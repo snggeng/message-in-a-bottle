@@ -1,17 +1,59 @@
 import React, { Component } from 'react';
+import {
+    BrowserRouter as Router,
+    Route,
+    Redirect,
+  } from 'react-router-dom'
 import { Container, Input, Menu } from 'semantic-ui-react'
+import Login from './Login/Login'
+import UserView from './UserView'
+import { url as server_url } from './utils/api'
 import './AppContainer.css';
+
+// Private auth variable to be passed on to routes
+const auth = { isAuthenticated: false }
+
+// PrivateRoute component that redirects if not authenticated
+const PrivateRoute = ({ component: Component, ...rest, isAuthenticated: isAuth, toggleAuth }) => (
+  <Route path="/:id" {...rest} render={ props => (
+    auth.isAuthenticated ? (
+      <Component isAuthenticated={isAuth} toggleAuth={toggleAuth} />
+    ) : (
+      <Redirect to={{
+        pathname: '/',
+        state: { from: props.location }
+      }}/>
+    )
+  )}/>
+)
+
+const Header = (props) => (
+    <div>
+        <h1 className={'title'}>Message In A Bottle</h1>
+        <p>{props.bottleSelected ? props.bottleId : 'no bottle selected'}</p>
+
+        <p>Find messages others have left behind in our webVR ocean on the left.</p>
+        <p>Alternatively, create your own.</p>
+    </div>
+)
 
 class AppContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        activeItem: 'home' 
+        activeItem: 'home',
+        isAuthenticated: auth.isAuthenticated 
     }
   }
 
   fetchData = () => {
 
+  }
+
+  toggleAuth = (isAuth) => {
+    // toggle global variable
+    auth.isAuthenticated = isAuth
+    this.setState(auth)
   }
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
@@ -32,11 +74,24 @@ class AppContainer extends Component {
                 <Menu.Item className={'title'} name='logout' active={activeItem === 'logout'} onClick={this.handleItemClick} />
                 </Menu.Menu>
             </Menu>
-                <h1 className={'title'}>Message In A Bottle</h1>
-                <p>{this.props.bottleSelected ? this.props.bottleId : 'no bottle selected'}</p>
-
-                <p>Find messages others have left behind in our webVR ocean on the left.</p>
-                <p>Alternatively, create your own.</p>
+                <Router>
+                    <div>
+                    <Route exact path="/" render={
+                        (props) => (<Header {...props}
+                                            isAuthenticated={this.state.isAuthenticated}
+                                            toggleAuth={this.toggleAuth} />)
+                        }/>
+                        <Route exact path="/login" render={
+                        (props) => (<Login {...props}
+                                            isAuthenticated={this.state.isAuthenticated}
+                                            toggleAuth={this.toggleAuth} />)
+                        }/>
+                        <PrivateRoute path="/user"
+                                    component={UserView}
+                                    isAuthenticated={this.state.isAuthenticated}
+                                    toggleAuth={this.toggleAuth}/>
+                    </div>
+                </Router>
             </Container>
         </div>
     );

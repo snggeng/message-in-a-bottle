@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-import './App.css';
 import { Grid } from 'semantic-ui-react'
 import SceneContainer from './Scene'
 import AppContainer from './AppContainer'
+import './App.css';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       bottleSelected: false,
-      bottleId: undefined
+      bottleId: undefined,
     };
   }
 
@@ -20,7 +20,6 @@ class App extends Component {
       bottleId: e.target.id
     })
   }
-
 
   render() {
     return (
