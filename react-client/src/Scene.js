@@ -109,11 +109,11 @@ class SceneContainer extends Component {
     });
   }
 
-  handleSelectBottle = (e) => {
-      e.preventDefault()
-      console.log(e.target.id)
-      this.setState({selectedBottle: e.target.id})
-  }
+//   handleSelectBottle = (e) => {
+//       e.preventDefault()
+//       console.log(e.target.id)
+//       this.setState({selectedBottle: e.target.id})
+//   }
 
   renderBottles = () => (
       this.state.bottles.map(bottle => {
@@ -131,7 +131,7 @@ class SceneContainer extends Component {
                     position={{x: x, y: y, z: z}}
                     rotation={{x: 10, y: 0, z: 0}} 
                     scale={{x: 0.1, y: 0.1, z: 0.1}}
-                    events={{click: this.handleSelectBottle}}
+                    events={{click: this.props.handleBottleSelect}}
                     animation__position={{
                         property: 'position', 
                         dur: 3000, from: `${x} ${y} ${z}`, 

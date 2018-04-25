@@ -7,15 +7,20 @@ import AppContainer from './AppContainer'
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {color: 'red'};
+    this.state = {
+      bottleSelected: false,
+      bottleId: undefined
+    };
   }
 
-  changeColor() {
-    const colors = ['red', 'orange', 'yellow', 'green', 'blue'];
+  handleBottleSelect = (e) => {
+    console.log('selected', e.target.id)
     this.setState({
-      color: colors[Math.floor(Math.random() * colors.length)]
-    });
+      bottleSelected: true,
+      bottleId: e.target.id
+    })
   }
+
 
   render() {
     return (
@@ -23,10 +28,10 @@ class App extends Component {
         <Grid divided='vertically'>
           <Grid.Row columns={2}>
             <Grid.Column>
-              <SceneContainer/>
+              <SceneContainer handleBottleSelect={this.handleBottleSelect} />
             </Grid.Column>
             <Grid.Column>
-              <AppContainer />
+              <AppContainer bottleId={this.state.bottleId} bottleSelected={this.state.bottleSelected} />
             </Grid.Column>
           </Grid.Row>
         </Grid>
