@@ -147,8 +147,8 @@ class SceneContainer extends Component {
     const shiftHue = (hue) => (hue + 1) % 360
     const getColor = (hue) => `hsl(${hue}, 100%, 50%)`
     return (
-        <div style={{height: '500px'}}>
-            <h1>VR Scene</h1>
+        <div style={{height: '100%'}}>
+            {/* <h1>VR Scene</h1> */}
             <Scene embedded={true}>
                 <a-assets>
                     <img crossOrigin="anonymous" alt="sky" id="groundTexture" src="https://cdn.aframe.io/a-painter/images/floor.jpg"/>

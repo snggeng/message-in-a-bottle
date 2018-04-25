@@ -10,29 +10,33 @@ class AppContainer extends Component {
     }
   }
 
+  fetchData = () => {
+
+  }
+
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
   render () {
     const { activeItem } = this.state
     return (
         <div>
-            <Container fluid>
-             <Menu secondary>
-                <Menu.Item name='home' active={activeItem === 'home'} onClick={this.handleItemClick} />
-                <Menu.Item name='messages' active={activeItem === 'messages'} onClick={this.handleItemClick} />
-                <Menu.Item name='friends' active={activeItem === 'friends'} onClick={this.handleItemClick} />
+            <Container style={{paddingRight:'2rem', height: '100vh'}}>
+             <Menu pointing secondary>
+                <Menu.Item className={'title'} name='home' active={activeItem === 'home'} onClick={this.handleItemClick} />
+                <Menu.Item className={'title'} name='about' active={activeItem === 'about'} onClick={this.handleItemClick} />
+                <Menu.Item className={'title'} name='bottles' active={activeItem === 'bottles'} onClick={this.handleItemClick} />
                 <Menu.Menu position='right'>
-                <Menu.Item>
+                {/* <Menu.Item>
                     <Input icon='search' placeholder='Search...' />
-                </Menu.Item>
-                <Menu.Item name='logout' active={activeItem === 'logout'} onClick={this.handleItemClick} />
+                </Menu.Item> */}
+                <Menu.Item className={'title'} name='logout' active={activeItem === 'logout'} onClick={this.handleItemClick} />
                 </Menu.Menu>
             </Menu>
                 <h1 className={'title'}>Message In A Bottle</h1>
                 <p>{this.props.bottleSelected ? this.props.bottleId : 'no bottle selected'}</p>
 
-                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa strong. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede link mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi.</p>
-                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa strong. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede link mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi.</p>
+                <p>Find messages others have left behind in our webVR ocean on the left.</p>
+                <p>Alternatively, create your own.</p>
             </Container>
         </div>
     );
