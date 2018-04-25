@@ -33,6 +33,7 @@ class SceneContainer extends Component {
             height: '50',
             material: {opacity: 0.0, transparent: true}
         },
+        selectedBottle: '',
         bottles: [
             {
                 "name": "bottle 1",
@@ -101,11 +102,17 @@ class SceneContainer extends Component {
     };
   }
 
-  changeColor() {
+  changeColor = () => {
     const colors = ['red', 'orange', 'yellow', 'green', 'blue'];
     this.setState({
       color: colors[Math.floor(Math.random() * colors.length)]
     });
+  }
+
+  handleSelectBottle = (e) => {
+      e.preventDefault()
+      console.log(e.target.id)
+      this.setState({selectedBottle: e.target.id})
   }
 
   renderBottles = () => (
@@ -117,19 +124,21 @@ class SceneContainer extends Component {
         const shiftVariation = () => Math.sin(Date.now() / 1000) * getRandomArbitrary(0.2, 0.6)
         const shiftPosition = (x, y, z) => `${x} ${y} ${z}`
         return (
-            <Entity gltf-model={'#bottle-3d'}
+            <Entity id={bottle.name}
+                    gltf-model={'#bottle-3d'}
                     key={bottle.name}
+                    name={bottle.name}
                     position={{x: x, y: y, z: z}}
                     rotation={{x: 10, y: 0, z: 0}} 
                     scale={{x: 0.1, y: 0.1, z: 0.1}}
+                    events={{click: this.handleSelectBottle}}
                     animation__position={{
                         property: 'position', 
                         dur: 3000, from: `${x} ${y} ${z}`, 
                         dir: 'alternate', 
                         to: `${x} ${y + shiftVariation()} ${z}`, 
                         loop:true
-                    }}
-            />
+                    }}/>
         )
     })
   )
@@ -172,7 +181,7 @@ class SceneContainer extends Component {
                 <Entity animation__color={{property: 'color', dur: 3000, from: getColor(shiftHue(0)), to: getColor(shiftHue(0)), loop:true}} />
                 </Entity>
                 {/* <Entity particle-system={{preset: 'snow', particleCount: 2000}}/> */}
-                <Entity text={{value: 'Hello, A-Frame React!', align: 'center', color:'black'}} position={{x: 0, y: 2, z: -1}}/>
+                <Entity text={{value: 'Hello, use the circulor cursor to click on a bottle to view its message!', align: 'center', color:'black'}} position={{x: 0, y: 2, z: -1}}/>
                 {/* <a-entity gltf-model="#bottle-3d" position={{x: 0, y: 1, z: -3}} scale="0.1 0.1 0.1"></a-entity> */}
                 {/* <Entity gltf-model={'#bottle-3d'} /> */}
                 {/* <Entity id="box"
