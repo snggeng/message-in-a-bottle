@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
-import SceneContainer from './Scene'
 import { Grid } from 'semantic-ui-react'
+import SceneContainer from './Scene'
+import AppContainer from './AppContainer'
 
 class App extends Component {
   constructor(props) {
@@ -20,19 +20,15 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-      <Grid divided='vertically'>
-        <Grid.Row columns={2}>
-          <Grid.Column>
-            <SceneContainer className="flex"/>
-          </Grid.Column>
-          <Grid.Column>
-            <div className="flex">IN THE MIDDLE</div>
-          </Grid.Column>
-        </Grid.Row>
+        <Grid divided='vertically'>
+          <Grid.Row columns={2}>
+            <Grid.Column>
+              <SceneContainer/>
+            </Grid.Column>
+            <Grid.Column>
+              <AppContainer />
+            </Grid.Column>
+          </Grid.Row>
         </Grid>
       </div>
     );
