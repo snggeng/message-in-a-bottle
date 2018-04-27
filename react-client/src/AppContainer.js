@@ -4,7 +4,7 @@ import {
     Route,
     Redirect,
   } from 'react-router-dom'
-import { Container, Input, Menu } from 'semantic-ui-react'
+import { Container, Input, Menu, Icon, Header, Step } from 'semantic-ui-react'
 import Login from './Login/Login'
 import UserView from './UserView'
 import { url as server_url } from './utils/api'
@@ -27,13 +27,43 @@ const PrivateRoute = ({ component: Component, ...rest, isAuthenticated: isAuth, 
   )}/>
 )
 
-const Header = (props) => (
+const AppHeader = (props) => (
     <div>
-        <h1 className={'title'}>Message In A Bottle</h1>
-        <p>{props.bottleSelected ? props.bottleId : 'no bottle selected'}</p>
+        <Header as='h2' icon textAlign='center'>
+            <Icon name='users' circular />
+            <h1 className={'title'}>Message In A Bottle</h1>
+            <Header.Content>
 
-        <p>Find messages others have left behind in our webVR ocean on the left.</p>
-        <p>Alternatively, create your own.</p>
+                <p>{props.bottleSelected ? props.bottleId : 'no bottle selected'}</p>
+                <p>Find messages others have left behind in our webVR ocean on the left.</p>
+                <p>Alternatively, create your own.</p>
+            </Header.Content>
+        </Header>
+        <Step.Group>
+            <Step>
+            <Icon name='mouse pointer' />
+            <Step.Content>
+                <Step.Title>Pick</Step.Title>
+                <Step.Description>Choose your bottle</Step.Description>
+            </Step.Content>
+            </Step>
+
+            <Step>
+            <Icon name='binoculars' />
+            <Step.Content>
+                <Step.Title>View</Step.Title>
+                <Step.Description>Read messages in the bottle</Step.Description>
+            </Step.Content>
+            </Step>
+
+            <Step>
+            <Icon name='compose' />
+            <Step.Content>
+                <Step.Title>Leave A Message</Step.Title>
+                <Step.Description>Write something meaningful</Step.Description>
+            </Step.Content>
+            </Step>
+        </Step.Group>
     </div>
 )
 
@@ -77,7 +107,7 @@ class AppContainer extends Component {
                 <Router>
                     <div>
                     <Route exact path="/" render={
-                        (props) => (<Header {...props}
+                        (props) => (<AppHeader {...props}
                                             isAuthenticated={this.state.isAuthenticated}
                                             toggleAuth={this.toggleAuth} />)
                         }/>
