@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 import {
-    BrowserRouter as Router,
+    Router,
     Route,
     Redirect,
+    withRouter,
+    Link
   } from 'react-router-dom'
 import { Container, Input, Menu, Icon, Header, Step, Segment, Button } from 'semantic-ui-react'
 import Login from './Login/Login'
 import UserView from './UserView'
+import { logout, getUser } from './utils/auth'
 import { url as server_url } from './utils/api'
+import history from './history'
 import './AppContainer.css';
 
 // Private auth variable to be passed on to routes
@@ -38,7 +42,7 @@ const AppHeader = (props) => (
             </Header.Content>
         </Header>
         <Segment raised>
-            <Step.Group>
+            <Step.Group fluid>
                 <Step>
                 <Icon name='mouse pointer' />
                 <Step.Content>
@@ -116,24 +120,32 @@ class AppContainer extends Component {
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
+  handleLogin = (e, { name }) => {
+      this.setState({ activeItem: name })
+  }
+  handleLogout = (e, { name }) => {
+      this.setState({ activeItem: name })
+      logout()
+      this.toggleAuth(false)
+  }
+
   render () {
     const { activeItem } = this.state
     return (
         <div>
             <Container style={{paddingRight:'2rem', height: '100vh'}}>
-             <Menu pointing secondary>
-                <Menu.Item name='home' active={activeItem === 'home'} onClick={this.handleItemClick} />
-                <Menu.Item name='about' active={activeItem === 'about'} onClick={this.handleItemClick} />
-                <Menu.Item name='bottles' active={activeItem === 'bottles'} onClick={this.handleItemClick} />
-                <Menu.Menu position='right'>
-                {/* <Menu.Item>
-                    <Input icon='search' placeholder='Search...' />
-                </Menu.Item> */}
-                <Menu.Item name='logout' active={activeItem === 'logout'} onClick={this.handleItemClick} />
-                </Menu.Menu>
-            </Menu>
-                <Router>
+                <Router history={history}>
                     <div>
+                    <Menu pointing secondary>
+                        <Menu.Item name='home' active={activeItem === 'home'} onClick={this.handleItemClick} />
+                        <Menu.Item name='about' active={activeItem === 'about'} onClick={this.handleItemClick} />
+                        <Menu.Item name='bottles' active={activeItem === 'bottles'} onClick={this.handleItemClick} />
+                        <Menu.Menu position='right'>
+                        <Menu.Item name={this.state.isAuthenticated ? 'logout' : 'login'} active={this.state.isAuthenticated ? activeItem === 'logout': activeItem === 'login'} onClick={this.state.isAuthenticated ? this.handleLogout : this.handleLogin}>
+                        {this.state.isAuthenticated ? (<Link to={'/'}>{'logout'}</Link>) : (<Link to={'/login'}>{'login'}</Link>)}
+                        </Menu.Item>
+                        </Menu.Menu>
+                    </Menu>
                     <Route exact path="/" render={
                         (props) => (<AppHeader {...props}
                                             isAuthenticated={this.state.isAuthenticated}

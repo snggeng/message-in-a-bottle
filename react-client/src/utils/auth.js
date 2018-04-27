@@ -1,5 +1,6 @@
 import jwt_decode from 'jwt-decode'
 import { url as server_url } from './api'
+import history from '../history'
 
 export const decodeToken = () => {
   let token = window.sessionStorage.getItem('token')
@@ -36,8 +37,8 @@ export const getUser = (props) => {
   return response
 }
 
-export const logout = async (props) => {
-  props.history.push('/') // important to redirect to prevent dashboard from rendering non-existent user
+export const logout = async () => {
+  history.push('/') // important to redirect to prevent dashboard from rendering non-existent user
   window.sessionStorage.removeItem('token')
   await fetch(server_url + '/public/signout')
 }

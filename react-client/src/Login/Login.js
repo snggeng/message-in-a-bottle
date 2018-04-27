@@ -2,10 +2,8 @@ import React, { Component } from 'react'
 import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
 import querystring from 'querystring'
 import { getUser, decodeToken, logout } from '../utils/auth'
-import './style.css'
-
-import { showToast } from '../utils/toaster'
 import { url as server_url } from '../utils/api'
+import './style.css'
 
 export default class Login extends Component {
   constructor(props) {
@@ -73,8 +71,8 @@ export default class Login extends Component {
           // console.log('Login Successful')
         })
         .catch(err => {
-          // console.error(err.stack);
-          showToast('error', err.toString(), err)
+          console.error(err.stack);
+        //   showToast('error', err.toString(), err)
         })
         // set state
         //this.setState({user: user})
@@ -90,14 +88,14 @@ export default class Login extends Component {
       const current_time = (Date.now().valueOf() / 1000) // get UTC time
       // TODO: option to refresh tokens on expiry
       if (token.exp < current_time) {
-        // console.log('token expired')
+        console.log('token expired')
         // prompt user to login again
-        showToast('error', 'Your token has expired. Please login again.', null)
+        // showToast('error', 'Your token has expired. Please login again.', null)
       } else {
         // if user is logged in, do not redirect to dashboard on logout
         this.props.toggleAuth(true)
         // populate req.user so logs can access user
-        fetch('/public/refresh', {
+        fetch(server_url + '/public/refresh', {
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
@@ -146,8 +144,8 @@ export default class Login extends Component {
       // console.log('Login Successful')
     })
     .catch(err => {
-      // console.error(err.stack);
-      showToast('error', err.toString(), err)
+      console.error(err.stack);
+    //   showToast('error', err.toString(), err)
     })
   }
 
