@@ -22,89 +22,34 @@ export default class Login extends Component {
 
   componentWillReceiveProps(){
     // redirect user
-    this.props.isAuthenticated ? this.props.history.push('/user') : this.props.history.push('/')
+    this.props.isAuthenticated ? this.props.history.push('/user') : this.props.history.push('/login')
   }
 
-  componentWillMount() {
-    if (window.location.hash) {
-      let token = querystring.parse(window.location.hash)['#access_token']
-      let client_id = 'trepleti'
-      let url = 'https://api.colab.duke.edu/identity/v1/'
-      let user, data
-      // make fetch call for user info
-      let getNetIDInfo = async (url, client_id, token) => {
-        try {
-          let response = await fetch(url, {
-            headers: {
-              'x-api-key': client_id,
-              'Authorization': `Bearer ${token}`
-            }
-          })
-          let data = await response.json();
-          return data
-        } catch (e) {
-          console.log(e)
-        }
-      }
-      let login = async () => {
-        data = await getNetIDInfo(url, client_id, token)
-        let u = {
-          username: data.netid,
-          password: data.netid,
-          first_name: data.firstName,
-          last_name: data.lastName
-        }
-        user = await fetch(server_url + '/public/sso', {
-          method: 'POST',
-          body: JSON.stringify(u),
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          }
-        }).then(res => res.json())
-        // console.log(`user ${JSON.stringify(user)}`)
-        this.signIn({username: data.netid, password:data.netid, sso:true}).then(res => {
-          // set token for api calls
-          window.sessionStorage.setItem('token', res.token)
-          // toggle authentication
-          this.props.toggleAuth(true)
-          // console.log('Login Successful')
-        })
-        .catch(err => {
-          console.error(err.stack);
-        //   showToast('error', err.toString(), err)
-        })
-        // set state
-        //this.setState({user: user})
-      }
-      // login
-      login()
-    }
-
-    // Validate if token is expired and redirect user accordingly
-    let jwt = window.sessionStorage.getItem('token')
-    if (jwt) {
-      let token = decodeToken()
-      const current_time = (Date.now().valueOf() / 1000) // get UTC time
-      // TODO: option to refresh tokens on expiry
-      if (token.exp < current_time) {
-        console.log('token expired')
-        // prompt user to login again
-        // showToast('error', 'Your token has expired. Please login again.', null)
-      } else {
-        // if user is logged in, do not redirect to dashboard on logout
-        this.props.toggleAuth(true)
-        // populate req.user so logs can access user
-        fetch(server_url + '/public/refresh', {
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Authorization': jwt
-          }
-        })
-      }
-    }
-  }
+  // componentWillMount() {
+  //   // Validate if token is expired and redirect user accordingly
+  //   let jwt = window.sessionStorage.getItem('token')
+  //   if (jwt) {
+  //     let token = decodeToken()
+  //     const current_time = (Date.now().valueOf() / 1000) // get UTC time
+  //     // TODO: option to refresh tokens on expiry
+  //     if (token.exp < current_time) {
+  //       console.log('token expired')
+  //       // prompt user to login again
+  //       // showToast('error', 'Your token has expired. Please login again.', null)
+  //     } else {
+  //       // if user is logged in, do not redirect to dashboard on logout
+  //       this.props.toggleAuth(true)
+  //       // populate req.user so logs can access user
+  //       fetch(server_url + '/public/refresh', {
+  //         headers: {
+  //           'Accept': 'application/json',
+  //           'Content-Type': 'application/json',
+  //           'Authorization': jwt
+  //         }
+  //       })
+  //     }
+  //   }
+  // }
 
   // Authentication
   signIn = async (user) => {
@@ -141,6 +86,7 @@ export default class Login extends Component {
       window.sessionStorage.setItem('token', res.token)
       // toggle authentication
       this.props.toggleAuth(true)
+      console.log(this.props.isAuthenticated)
       // console.log('Login Successful')
     })
     .catch(err => {

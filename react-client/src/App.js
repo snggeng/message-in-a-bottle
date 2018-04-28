@@ -4,13 +4,23 @@ import SceneContainer from './Scene'
 import AppContainer from './AppContainer'
 import './App.css';
 
+const auth = { isAuthenticated: false }
+
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       bottleSelected: false,
       bottleId: undefined,
+      isAuthenticated: auth.isAuthenticated
     };
+  }
+
+  toggleAuth = (isAuth) => {
+    // toggle global variable
+    auth.isAuthenticated = isAuth
+    console.log('is auth', isAuth)
+    this.setState(auth)
   }
 
   handleBottleSelect = (e) => {
@@ -30,7 +40,10 @@ class App extends Component {
               <SceneContainer handleBottleSelect={this.handleBottleSelect} />
             </Grid.Column>
             <Grid.Column>
-              <AppContainer bottleId={this.state.bottleId} bottleSelected={this.state.bottleSelected} />
+              <AppContainer bottleId={this.state.bottleId} 
+                            bottleSelected={this.state.bottleSelected} 
+                            toggleAuth={this.toggleAuth} 
+                            isAuthenticated={this.state.isAuthenticated}/>
             </Grid.Column>
           </Grid.Row>
         </Grid>
