@@ -3,13 +3,13 @@ import {
     Router,
     Route,
     Redirect,
-    withRouter,
     Link
   } from 'react-router-dom'
 import { getUser, decodeToken, logout } from './utils/auth'
-import { Container, Input, Menu, Icon, Header, Step, Segment, Button } from 'semantic-ui-react'
+import { Container, Menu, Icon, Header, Segment, Button } from 'semantic-ui-react'
 import Login from './Login/Login'
 import UserView from './UserView'
+import Signup from './Signup'
 import { url as server_url } from './utils/api'
 import history from './history'
 import './AppContainer.css';
@@ -42,31 +42,6 @@ const AppHeader = (props) => (
             </Header.Content>
         </Header>
         <Segment raised>
-            {/* <Step.Group fluid>
-                <Step>
-                <Icon name='mouse pointer' />
-                <Step.Content>
-                    <Step.Title>Pick</Step.Title>
-                    <Step.Description>Choose your bottle</Step.Description>
-                </Step.Content>
-                </Step>
-
-                <Step>
-                <Icon name='binoculars' />
-                <Step.Content>
-                    <Step.Title>View</Step.Title>
-                    <Step.Description>Read messages in the bottle</Step.Description>
-                </Step.Content>
-                </Step>
-
-                <Step>
-                <Icon name='compose' />
-                <Step.Content>
-                    <Step.Title>Leave A Message</Step.Title>
-                    <Step.Description>Write something meaningful</Step.Description>
-                </Step.Content>
-                </Step>
-            </Step.Group> */}
             <Segment className={'header-instructions'}>
             <h2 style={{lineHeight: 2.2}}>{'Use the '}
                 <code className={'bordered-key'}>W</code>
@@ -107,11 +82,22 @@ class AppContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        activeItem: 'home'
+        activeItem: 'home',
+        user: {
+            role: '',
+            name: ''
+        }
     }
   }
 
-  componentWillReceiveProps(){
+  componentWillReceiveProps(nextProps){
+    // Validate if token is expired and redirect user accordingly
+    console.log('next props', nextProps)
+    if (nextProps.isAuthenticated && !this.props.isAuthenticated) {
+        this.props.toggleAuth(true)
+    }
+
+    console.log('app containter will receive props, is auth: ', this.props.isAuthenticated)
     // redirect user
     this.props.isAuthenticated ? 
     history.push('/user') : 
@@ -121,6 +107,9 @@ class AppContainer extends Component {
   }
 
   componentWillMount() {
+    let user = getUser(this.props).data
+    console.log('user is ', user)
+    this.setState(user)
     // Validate if token is expired and redirect user accordingly
     let jwt = window.sessionStorage.getItem('token')
     if (jwt) {
@@ -169,6 +158,10 @@ class AppContainer extends Component {
                 <Router history={history}>
                     <div>
                     <Menu pointing secondary>
+                        {this.props.isAuthenticated ? (
+                        <Menu.Item name='user'>
+                           <Icon name='user' circular /> {this.state.user.name}
+                        </Menu.Item>) : null}
                         {/* <Menu.Item name='home' active={activeItem === 'home'} onClick={this.handleItemClick} />
                         <Menu.Item name='about' active={activeItem === 'about'} onClick={this.handleItemClick} />
                         <Menu.Item name='bottles' active={activeItem === 'bottles'} onClick={this.handleItemClick} /> */}
@@ -188,8 +181,15 @@ class AppContainer extends Component {
                                             isAuthenticated={this.props.isAuthenticated}
                                             toggleAuth={this.props.toggleAuth} />)
                         }/>
+                        <Route exact path="/signup" render={
+                        (props) => (<Signup {...props}
+                                            isAuthenticated={this.props.isAuthenticated}
+                                            toggleAuth={this.props.toggleAuth} />)
+                        }/>
                         <PrivateRoute path="/user"
                                     component={UserView}
+                                    bottleId={this.props.bottleId} 
+                                    bottleSelected={this.props.bottleSelected}
                                     isAuthenticated={this.props.isAuthenticated}
                                     toggleAuth={this.props.toggleAuth}/>
                     </div>
