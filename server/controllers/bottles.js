@@ -15,7 +15,7 @@ const createBottle = (req, res, next) => {
     let newBottle = new Bottle({
       name: req.body.name,
       message: req.body.message,
-      createdBy: req.user.id
+      createdBy: req.body.createdBy
     })
     // save bottle
     newBottle.save((err) => {
