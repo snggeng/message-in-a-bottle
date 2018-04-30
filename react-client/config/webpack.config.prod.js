@@ -152,42 +152,7 @@ module.exports = {
               
               compact: true,
             },
-          },
-
-          {
-            test: require.resolve('../node_modules/three-pathfinding/src/utils.js'),
-            loader: require.resolve('babel-loader'),
-            options: { compact: true },
-         },
-         {
-            test: require.resolve('../node_modules/aframe-extras/src/controls/keyboard-controls.js'),
-            loader: require.resolve('babel-loader'),
-            options: { compact: true },
-        },{
-          test: require.resolve('../node_modules/aframe-extras/src/controls/movement-controls.js'),
-          loader: require.resolve('babel-loader'),
-          options: { compact: true },
-      },{
-        test: require.resolve('../node_modules/aframe-extras/src/loaders/animation-mixer.js'),
-        loader: require.resolve('babel-loader'),
-        options: { compact: true },
-    },{
-      test: require.resolve('../node_modules/aframe-extras/src/loaders/gltf-model-legacy.js'),
-      loader: require.resolve('babel-loader'),
-      options: { compact: true },
-  },{
-    test: require.resolve('../node_modules/aframe-extras/src/loaders/json-model.js'),
-    loader: require.resolve('babel-loader'),
-    options: { compact: true },
-},{
-  test: require.resolve('../node_modules/aframe-extras/src/loaders/object-model.js'),
-  loader: require.resolve('babel-loader'),
-  options: { compact: true },
-},{
-  test: require.resolve('../node_modules/aframe-extras/src/loaders/ply-model.js'),
-  loader: require.resolve('babel-loader'),
-  options: { compact: true },
-},{
+          },{
   test: require.resolve('../node_modules/aframe-extras.ocean/index.js'),
   loader: require.resolve('babel-loader'),
   options: { compact: true },

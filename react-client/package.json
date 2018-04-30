@@ -2,7 +2,7 @@
   "name": "react-client",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://github.com/duke-compsci290-spring2018/final-project-team-36/react-client",
+  "homepage": "https://github.com/duke-compsci290-spring2018/final-project-team-36",
   "dependencies": {
     "aframe": "^0.8.2",
     "aframe-animation-component": "^4.1.2",
