@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Container, Input, Menu } from 'semantic-ui-react'
+import { Segment } from 'semantic-ui-react'
 import { url as server_url } from './utils/api'
 import { getUser } from './utils/auth'
 import CreateBottle from './CreateBottle'
+import BottleView from './BottleView'
 
 class UserView extends Component {
   constructor(props) {
@@ -53,10 +54,17 @@ class UserView extends Component {
     const { activeItem } = this.state
     return (
         <div>
-            <h1 className={'title'}>Message In A Bottle</h1>
-            <p>{this.props.bottleSelected ? this.props.bottleId : 'no bottle selected'}</p>
-            <p>User View.</p>
-            <CreateBottle isAuthenticated={this.props.isAuthenticated} />
+          <h1 className={'title'}>Message In A Bottle</h1>
+          {this.props.bottleSelected ? (
+              <Segment>
+                <BottleView bottleId={this.props.bottleId} bottleSelected={this.props.bottleSelected} isAuthenticated={this.props.isAuthenticated}/>
+              </Segment>
+            ) : (
+              <Segment>
+                <CreateBottle isAuthenticated={this.props.isAuthenticated} />
+              </Segment>
+          ) 
+          }
         </div>
     );
   }

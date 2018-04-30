@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { Form, Button, Comment, Segment } from 'semantic-ui-react'
+import { Link } from 'react-router-dom'
+import { Form, Button, Comment, Segment, Popup, Message } from 'semantic-ui-react'
 import { url as server_url } from './utils/api'
 import { getUser } from './utils/auth'
 
@@ -71,27 +72,32 @@ class BottleView extends Component {
         <Comment.Group>
                 <Comment>
                 <Comment.Content>
-                    <Comment.Author>{this.state.bottle.name}</Comment.Author>
+                    <h1 className={'title'}>Viewing: {this.state.bottle.name}</h1>
                     <Comment.Metadata>
                     <div>Created By: {this.state.bottle.createdBy}, at {this.state.bottle.updated_at}</div>
                     </Comment.Metadata>
                     {this.state.bottle.message.length != 0 ? this.state.bottle.message.map((message, i) => {
                         return i%2 == 0 ? 
-                        (<Segment key={i} textAlign='left' compact inverted color='teal'>
+                        (<Segment key={i} textAlign='left' color='teal'>
                         <p>{message}</p>
                         </Segment>) : 
-                        (<Segment key={i} textAlign='right' compact inverted color='blue'>
+                        (<Segment key={i} textAlign='right' color='blue'>
                             <p>{message}</p>
                             </Segment>)
                     }) : 
                     null }
                 </Comment.Content>
                 </Comment>
-
-            <Form reply>
+            <Form reply>     
             <Form.TextArea value={this.state.newMessage} name='newMessage' onChange={this.handleChange} />
-            <Button content='Add Comment' labelPosition='left' icon='edit' primary onClick={this.handleUpdateBottle} />
+            {this.props.isAuthenticated ? <Button content='Add Comment' labelPosition='left' icon='edit' primary onClick={this.handleUpdateBottle} /> :
+            <Button content='Add Comment' labelPosition='left' icon='edit' primary disabled/>}
             </Form>
+            { this.props.isAuthenticated ? null : 
+                <Message warning>
+                    <Message.Header>You must login before you can add comments!</Message.Header>
+                    <p>Visit our <Link to={'/signup'}><a>signup</a></Link> page, or <Link to={'/login'}><a>login</a></Link>, then try again.</p>
+                </Message> }
         </Comment.Group>
     );
   }
