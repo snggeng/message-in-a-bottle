@@ -57,3 +57,16 @@ Sample curl:
 curl http://localhost:3000/public
 // => {"message": "hi"}
 ```
+
+
+What makes your application useful 
+Our application is useful because it’s an platform that connects people all over the world, and allows them to express themselves. Anyone can create a bottle containing their message to the world, and view the messages others have created. Given a degree of Internet anonymity, what will users write? What legacies will they leave behind in their bottles? The possibilities are endless.
+
+References for your data that establishes its authenticity 
+All of our data are direct user inputs. The database is dynamic.
+
+Discuss both the pros and the cons of different framework possibilities you considered and why you made the decision you did (including choosing not to use any framework)
+We chose to use A-Frame to handle the WebVR experience because it was the best option for efficiently building virtual web environments. Compared to other 3D libraries such as three.js, A-Frame was much simpler to pick up in a short amount of time, given the relatively simplistic nature of its code – it’s essentially HTML, and the provided tutorials were very helpful. At the same time, A-Frame could easily be connected to Javascript, allowing us to link A-Frame elements with Javascript events and so forth. Furthermore, the A-Frame ecosystem had many community-built add-ons such as a physics and animation engine, due to the fact that its components system allowed the community to build and share such custom components; this allowed us to add features such oceans and animations. Finally, the framework is well-documented, and the Slack channel was very active (any questions we had were quickly answered by the community). After discovering all of these benefits through the Explore assignment, we easily agreed that A-Frame was the best framework option for our app’s WebVR component.
+
+In terms of the backend, we essentially used a stack that we were already very comfortable with.
+
