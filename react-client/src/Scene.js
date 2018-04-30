@@ -1,7 +1,7 @@
 import 'aframe';
 import 'aframe-animation-component';
 import 'aframe-particle-system-component';
-import 'aframe-extras.ocean'
+import {ocean} from 'aframe-extras'
 import 'babel-polyfill';
 import {Entity, Scene} from 'aframe-react';
 import React, { Component } from 'react';
