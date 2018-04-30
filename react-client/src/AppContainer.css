@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css?family=Bungee+Shade');
+
+.title {
+    font-family: 'Bungee Shade', sans-serif;
+    color: skyblue;
+}
+
+.bordered-key {
+    margin: 2px;
+    padding: 7px 15px;
+    border: 3px solid #E8E8E8;
+}
+
+.header-instructions {
+    margin: 30px !important;
+}
