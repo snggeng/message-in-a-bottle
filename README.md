@@ -5,14 +5,12 @@ This is the main repository for the CS 290 Final Project: `Message In a Bottle`.
 * Geng Sng (gs148)
 * Gerald Kora Kwok (gk72)
 
-## Topic
-We would like to build an online message-in-a-bottle platform similar to [paperplanes.world](https://paperplanes.world/).
-
-Essentially, users will be able to place short messages inside virtual bottles. Users can retrieve a bottle at random, read the message contained inside, and add their own message. This is interesting because it's a platform that can connect people all over the world.
-
-Ideally we'd like to implement some cool visualizations to make the platform look aesthetic (explore tools like three.js).
-
-Our data sources will be the user-inputted messages, but other ways we could incorporate existing data sources could be scraping text from popular sites (reddit, etc) to fill initial bottles, or making the 'ocean' environment dependent on real-time data sources like weather.
+Started: April 20th
+Finished: April 30th
+Hours: 100 hours
+Consulted with: NONE
+Online Resources: A-Frame documentation
+Assets: 3D bottles from https://sketchfab.com/models/beb69bc08a8f487ab8c5207fb155cbf2#download by Francesco Coldesina
 
 #### What makes your application useful 
 Our application is useful because it’s an platform that connects people all over the world, and allows them to express themselves. Anyone can create a bottle containing their message to the world, and view the messages others have created. Given a degree of Internet anonymity, what will users write? What legacies will they leave behind in their bottles? The possibilities are endless.
