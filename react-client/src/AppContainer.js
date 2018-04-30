@@ -100,16 +100,19 @@ class AppContainer extends Component {
     console.log('next props', nextProps)
     if (nextProps.isAuthenticated && !this.props.isAuthenticated) {
         this.props.toggleAuth(true)
+        let user = getUser(this.props).data
+        console.log('user is ', user)
+        this.setState({user})
     }
 
     if (nextProps.isAuthenticated && this.state.user == undefined) {
         console.log('component willreceive props, get user:', getUser(this.props), 'this props: ', this.props)
         let user = getUser(this.props).data
         console.log('user is ', user)
-        this.setState(user)
+        this.setState({user})
     }
 
-    console.log('app containter will receive props, is auth: ', this.props.isAuthenticated)
+    // console.log('app containter will receive props, is auth: ', this.props.isAuthenticated)
     // redirect user
     this.props.isAuthenticated ? 
     history.push('/user') : 
@@ -144,13 +147,9 @@ class AppContainer extends Component {
 
         let user = getUser(this.props).data
         console.log('user is ', user)
-        this.setState(user)
+        this.setState({user})
       }
     }
-  }
-
-  fetchData = () => {
-
   }
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
@@ -172,10 +171,11 @@ class AppContainer extends Component {
                 <Router history={history}>
                     <div>
                     <Menu pointing secondary>
-                        {this.props.isAuthenticated ? (
+                        {this.props.isAuthenticated && this.state.user != undefined ? (
                         <Menu.Item name='user'>
-                           <Icon name='user' circular /> {this.state.user != undefined ? this.state.user.name : null}
+                           <Icon name='user' circular /> {this.state.user.display}
                         </Menu.Item>) : null}
+                        <Menu.Item name='home' onClick={this.props.handleHomeSelect} />
                         {/* <Menu.Item name='home' active={activeItem === 'home'} onClick={this.handleItemClick} />
                         <Menu.Item name='about' active={activeItem === 'about'} onClick={this.handleItemClick} />
                         <Menu.Item name='bottles' active={activeItem === 'bottles'} onClick={this.handleItemClick} /> */}

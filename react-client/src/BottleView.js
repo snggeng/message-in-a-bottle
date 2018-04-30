@@ -14,6 +14,7 @@ class BottleView extends Component {
             'updated_at': ''
         },
         'newMessage': '',
+        'user': undefined
     }
   }
 
@@ -24,7 +25,10 @@ class BottleView extends Component {
   }
 
   componentWillMount() {
-      this.fetchData()
+    let user = getUser(this.props).data
+    // console.log('user is ', user)
+    this.setState({user})
+    this.fetchData()
     //   console.log('bottle', this.state)
   }
 
@@ -37,7 +41,7 @@ class BottleView extends Component {
       }
     })
     const bottle = await response.json()
-    console.log(bottle)
+    // console.log(bottle)
     if (response.status !== 200) throw bottle
     this.setState({ bottle })
   }
@@ -50,7 +54,7 @@ class BottleView extends Component {
 //   mongodb://heroku_wz7g204z:3en3ik3a12lk600pq00kpa49kf@ds249299.mlab.com:49299/heroku_wz7g204z
 
   handleUpdateBottle = async () => {
-    let updatedMessage = [...this.state.bottle.message, this.state.newMessage]
+    let updatedMessage = [...this.state.bottle.message, {comment: this.state.newMessage, user:this.state.user.display, color: this.state.user.color}]
     console.log(updatedMessage)
     const response = await fetch(server_url + '/public/bottles/' + this.props.bottleId, {
         method: 'put',
@@ -78,11 +82,11 @@ class BottleView extends Component {
                     </Comment.Metadata>
                     {this.state.bottle.message.length != 0 ? this.state.bottle.message.map((message, i) => {
                         return i%2 == 0 ? 
-                        (<Segment key={i} textAlign='left' color='teal'>
-                        <p>{message}</p>
+                        (<Segment key={i} textAlign='left' color={message.color}>
+                        <p>{message.user}: {message.comment}</p>
                         </Segment>) : 
-                        (<Segment key={i} textAlign='right' color='blue'>
-                            <p>{message}</p>
+                        (<Segment key={i} textAlign='right' color={message.color}>
+                            <p>{message.user}: {message.comment}</p>
                             </Segment>)
                     }) : 
                     null }

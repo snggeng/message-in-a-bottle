@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Checkbox, Form } from 'semantic-ui-react'
+import { Button, Checkbox, Form, Message } from 'semantic-ui-react'
 import { url as server_url } from './utils/api'
 import { getUser } from './utils/auth'
 
@@ -10,7 +10,8 @@ class CreateBottle extends Component {
         bottle: {
             name: '',
             message: ''
-        }
+        },
+        success: false
     }
   }
 
@@ -26,6 +27,15 @@ class CreateBottle extends Component {
 
   handleCreateBottle = async () => {
     let user = getUser(this.props).data
+    let bottle = {
+      name: this.state.name,
+      message: [{
+        comment: this.state.message,
+        user: user.display,
+        color: user.color
+      }],
+      createdBy: user._id
+    }
     console.log('user id', user._id)
     const response = await fetch(server_url + '/api/bottles', {
         method: 'post',
@@ -34,12 +44,15 @@ class CreateBottle extends Component {
           'Content-Type': 'application/json',
           'Authorization': user.token
         },
-        body: JSON.stringify({...this.state.bottle, createdBy: user._id })
+        body: JSON.stringify(bottle)
       })
       // console.log(response)
       const body = await response.json()
       // console.log(body)
       if (response.status !== 200) throw body
+      await this.setState({success: true})
+      // await setTimeout(this.setState({success: false}), 1000)
+      // window.location.reload(true)
   }
 
   render () {
@@ -47,6 +60,10 @@ class CreateBottle extends Component {
     return (
         <div>
             <h1 className={'title'}>Create Bottle</h1>
+            {this.state.success ? 
+            <Message success>
+                    <Message.Header>Created a new bottle!</Message.Header>
+            </Message> : null }
             <Form>
                 <Form.Field>
                 <label>Bottle Name</label>

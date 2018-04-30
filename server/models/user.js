@@ -27,7 +27,7 @@ const UserSchema = new Schema({
   },
   color: {
     type: String,
-    enum:['red', 'orange', 'yellow', 'olive', 'green', 'teal',
+    enum: ['red', 'orange', 'yellow', 'olive', 'green', 'teal',
       'blue', 'violet', 'purple', 'pink', 'brown', 'black'],
     required: true
   },

@@ -17,7 +17,8 @@ const createUser = (req, res, next) => {
       username: req.body.username,
       password: req.body.password,
       role: req.body.role,
-      display: req.body.display
+      display: req.body.display,
+      color: req.body.color
     })
     if (req.body.first_name !== undefined) newUser.first_name = req.body.first_name
     if (req.body.last_name !== undefined) newUser.last_name = req.body.last_name
@@ -82,6 +83,8 @@ const updateUser = (req, res, next) => {
     if (req.body.username) user.username = req.body.username
     if (req.body.password) user.password = req.body.password
     if (req.body.role) user.role = req.body.role
+    if (req.body.color) user.color = req.body.color
+    if (req.body.display) user.display = req.body.display
     if (req.body.first_name !== undefined) user.first_name = req.body.first_name
     if (req.body.last_name !== undefined) user.last_name = req.body.last_name
     if (req.body.netId) user.netId = req.body.netId

@@ -3,6 +3,12 @@ const Schema = mongoose.Schema
 const mongoosePaginate = require('mongoose-paginate')
 const { errorMessage, setDateFields } = require('../utils')
 
+const MessageSchema = new Schema({
+  comment: String,
+  user: String,
+  color: String
+})
+
 const BottleSchema = new Schema({
   name: {
     type: String,
@@ -10,7 +16,7 @@ const BottleSchema = new Schema({
     required: true
   },
   message: {
-    type: [String],
+    type: [MessageSchema],
     required: true
   },
   createdBy: {

@@ -23,8 +23,10 @@ class App extends Component {
     this.fetchData()
   }
 
-  componentWillReceiveProps() {
-
+  componentWillReceiveProps(nextProps) {
+    if (this.state.bottles.length != nextProps.bottles.length) {
+      this.fetchData()
+    }
   }
 
   toggleAuth = (isAuth) => {
@@ -41,6 +43,8 @@ class App extends Component {
       bottleId: e.target.id
     })
   }
+
+  handleHomeSelect = () => this.setState({ bottleSelected: false, bottleId: undefined})
 
   fetchData = async () => {
     const response = await fetch(server_url + '/public/bottles', {
@@ -69,7 +73,8 @@ class App extends Component {
             </Grid.Column>
             <Grid.Column>
               <AppContainer bottleId={this.state.bottleId} 
-                            bottleSelected={this.state.bottleSelected} 
+                            bottleSelected={this.state.bottleSelected}
+                            handleHomeSelect={this.handleHomeSelect}
                             toggleAuth={this.toggleAuth} 
                             isAuthenticated={this.state.isAuthenticated}/>
             </Grid.Column>
