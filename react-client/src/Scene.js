@@ -34,73 +34,15 @@ class SceneContainer extends Component {
             material: {opacity: 0.0, transparent: true}
         },
         selectedBottle: '',
-        bottles: [
-            {
-                "name": "bottle 1",
-                "message": "i left a message in a bottle",
-                "createdBy": "user 1",
-                "created_at": "1524459021149",
-                "updated_at": "1524459021149"
-            },
-            {
-                "name": "bottle 2",
-                "message": "i left a message in a bottle",
-                "createdBy": "user 1",
-                "created_at": "1524459021149",
-                "updated_at": "1524459021149"
-            },
-            {
-                "name": "bottle 3",
-                "message": "i left a message in a bottle",
-                "createdBy": "user 1",
-                "created_at": "1524459021149",
-                "updated_at": "1524459021149"
-            },
-            {
-                "name": "bottle 4",
-                "message": "i left a message in a bottle",
-                "createdBy": "user 1",
-                "created_at": "1524459021149",
-                "updated_at": "1524459021149"
-            },
-            {
-                "name": "bottle 5",
-                "message": "i left a message in a bottle",
-                "createdBy": "user 1",
-                "created_at": "1524459021149",
-                "updated_at": "1524459021149"
-            },
-            {
-                "name": "bottle 6",
-                "message": "i left a message in a bottle",
-                "createdBy": "user 1",
-                "created_at": "1524459021149",
-                "updated_at": "1524459021149"
-            },
-            {
-                "name": "bottle 7",
-                "message": "i left a message in a bottle",
-                "createdBy": "user 1",
-                "created_at": "1524459021149",
-                "updated_at": "1524459021149"
-            },
-            {
-                "name": "bottle 8",
-                "message": "i left a message in a bottle",
-                "createdBy": "user 1",
-                "created_at": "1524459021149",
-                "updated_at": "1524459021149"
-            },
-            {
-                "name": "bottle 9",
-                "message": "i left a message in a bottle",
-                "createdBy": "user 1",
-                "created_at": "1524459021149",
-                "updated_at": "1524459021149"
-            }
-        ]
+        bottles: this.props.bottles || []
     };
   }
+
+//   componentWillReceiveProps(nextProps) {
+//       if (this.props.bottles.length != nextProps.bottles.length) {
+//           this.setState({bottles: nextProps.bottles })
+//       }
+//   }
 
   changeColor = () => {
     const colors = ['red', 'orange', 'yellow', 'green', 'blue'];
@@ -109,14 +51,8 @@ class SceneContainer extends Component {
     });
   }
 
-//   handleSelectBottle = (e) => {
-//       e.preventDefault()
-//       console.log(e.target.id)
-//       this.setState({selectedBottle: e.target.id})
-//   }
-
   renderBottles = () => (
-      this.state.bottles.map(bottle => {
+      this.props.bottles.map(bottle => {
         let x = Math.random()*35-25;
         let y = -0.5;
         let z = Math.random()*43-25;
@@ -124,7 +60,7 @@ class SceneContainer extends Component {
         const shiftVariation = () => Math.sin(Date.now() / 1000) * getRandomArbitrary(0.2, 0.6)
         const shiftPosition = (x, y, z) => `${x} ${y} ${z}`
         return (
-            <Entity id={bottle.name}
+            <Entity id={bottle._id}
                     gltf-model={'#bottle-3d'}
                     key={bottle.name}
                     name={bottle.name}
@@ -196,7 +132,7 @@ class SceneContainer extends Component {
                         material={{color: '#24CAFF'}}/>
                 </Entity>  */}
                 
-                {this.renderBottles()}
+                {this.props.bottles ? this.renderBottles(): null}
 
                 <Entity primitive="a-camera">
                 <Entity primitive="a-cursor" animation__click={{startEvents: 'click', from: '0.1 0.1 0.1', to: '1 1 1', dur: 150}}/>

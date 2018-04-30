@@ -26,6 +26,7 @@ export const getUser = (props) => {
       // console.log(user.exp < current_time)
       response.data = {
         name: user.username,
+        display: user.display,
         role: user.role,
         token: token,
         _id: user._id

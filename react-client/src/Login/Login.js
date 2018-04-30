@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
-import querystring from 'querystring'
+import { Link } from 'react-router-dom'
 import { getUser, decodeToken, logout } from '../utils/auth'
 import { url as server_url } from '../utils/api'
 import './style.css'
@@ -170,7 +170,7 @@ export default class Login extends Component {
                 </Segment>
                 </Form>
                 <Message>
-                New to us? <a href='#'>Sign Up</a>
+                New to us? <Link to={'/signup'}><a>Sign Up</a></Link>
                 </Message>
             </Grid.Column>
             </Grid>

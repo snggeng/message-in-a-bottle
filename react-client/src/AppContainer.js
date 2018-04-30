@@ -10,6 +10,7 @@ import { Container, Menu, Icon, Header, Segment, Button } from 'semantic-ui-reac
 import Login from './Login/Login'
 import UserView from './UserView'
 import Signup from './Signup'
+import BottleView from './BottleView'
 import { url as server_url } from './utils/api'
 import history from './history'
 import './AppContainer.css';
@@ -18,10 +19,10 @@ import './AppContainer.css';
 // const auth = { isAuthenticated: false }
 
 // PrivateRoute component that redirects if not authenticated
-const PrivateRoute = ({ component: Component, ...rest, isAuthenticated: isAuth, toggleAuth }) => (
+const PrivateRoute = ({ component: Component, ...rest, isAuthenticated: isAuth, toggleAuth, bottleId, bottleSelected }) => (
   <Route path="/:id" {...rest} render={ props => (
     isAuth ? (
-      <Component isAuthenticated={isAuth} toggleAuth={toggleAuth} />
+      <Component isAuthenticated={isAuth} toggleAuth={toggleAuth} bottleId={bottleId} bottleSelected={bottleSelected} />
     ) : (
       <Redirect to={{
         pathname: '/',
@@ -42,38 +43,45 @@ const AppHeader = (props) => (
             </Header.Content>
         </Header>
         <Segment raised>
-            <Segment className={'header-instructions'}>
-            <h2 style={{lineHeight: 2.2}}>{'Use the '}
-                <code className={'bordered-key'}>W</code>
-                <code className={'bordered-key'}>A</code> 
-                <code className={'bordered-key'}>S</code>
-                <code className={'bordered-key'}>D</code>
-                {' keys or '} 
-                <Icon name='arrow left' bordered />
-                <Icon name='arrow right' bordered />
-                <Icon name='arrow up' bordered />
-                <Icon name='arrow down' bordered />
-                {' arrow keys to move around the ocean.'}</h2>
-            <h2>{'Alternatively, '} 
-                <Link to={'/login'}>
-                    <Button animated inverted color='teal'>
-                        <Button.Content visible>Login</Button.Content>
-                        <Button.Content hidden>
-                            <Icon name='right arrow' />
-                        </Button.Content>
-                    </Button>
-                </Link>
-                {' or '}
-                <Link to={'/signup'}>
-                    <Button animated='vertical' inverted color='teal'>
-                        <Button.Content visible>Sign Up</Button.Content>
-                        <Button.Content hidden>
-                            <Icon name='user' />
-                        </Button.Content>
-                    </Button>
-                </Link>
-            {' to create your own.'}</h2>
-            </Segment>
+            {props.bottleSelected ? (
+                <Segment>
+                    <BottleView bottleId={props.bottleId} bottleSelected={props.bottleSelected} isAuthenticated={props.isAuthenticated}/>
+                </Segment>
+            ) : (
+                <Segment className={'header-instructions'}>
+                <h2 style={{lineHeight: 2.2}}>{'Use the '}
+                    <code className={'bordered-key'}>W</code>
+                    <code className={'bordered-key'}>A</code> 
+                    <code className={'bordered-key'}>S</code>
+                    <code className={'bordered-key'}>D</code>
+                    {' keys or '} 
+                    <Icon name='arrow left' bordered />
+                    <Icon name='arrow right' bordered />
+                    <Icon name='arrow up' bordered />
+                    <Icon name='arrow down' bordered />
+                    {' arrow keys to move around the ocean.'}</h2>
+                <h2>{'Alternatively, '} 
+                    <Link to={'/login'}>
+                        <Button animated inverted color='teal'>
+                            <Button.Content visible>Login</Button.Content>
+                            <Button.Content hidden>
+                                <Icon name='right arrow' />
+                            </Button.Content>
+                        </Button>
+                    </Link>
+                    {' or '}
+                    <Link to={'/signup'}>
+                        <Button animated='vertical' inverted color='teal'>
+                            <Button.Content visible>Sign Up</Button.Content>
+                            <Button.Content hidden>
+                                <Icon name='user' />
+                            </Button.Content>
+                        </Button>
+                    </Link>
+                {' to create your own.'}</h2>
+                </Segment>  
+            )}
+            
         </Segment>
     </div>
 )
@@ -83,10 +91,7 @@ class AppContainer extends Component {
     super(props);
     this.state = {
         activeItem: 'home',
-        user: {
-            role: '',
-            name: ''
-        }
+        user: undefined
     }
   }
 
@@ -95,6 +100,13 @@ class AppContainer extends Component {
     console.log('next props', nextProps)
     if (nextProps.isAuthenticated && !this.props.isAuthenticated) {
         this.props.toggleAuth(true)
+    }
+
+    if (nextProps.isAuthenticated && this.state.user == undefined) {
+        console.log('component willreceive props, get user:', getUser(this.props), 'this props: ', this.props)
+        let user = getUser(this.props).data
+        console.log('user is ', user)
+        this.setState(user)
     }
 
     console.log('app containter will receive props, is auth: ', this.props.isAuthenticated)
@@ -107,9 +119,6 @@ class AppContainer extends Component {
   }
 
   componentWillMount() {
-    let user = getUser(this.props).data
-    console.log('user is ', user)
-    this.setState(user)
     // Validate if token is expired and redirect user accordingly
     let jwt = window.sessionStorage.getItem('token')
     if (jwt) {
@@ -123,6 +132,7 @@ class AppContainer extends Component {
       } else {
         // if user is logged in, do not redirect to dashboard on logout
         this.props.toggleAuth(true)
+
         // populate req.user so logs can access user
         fetch(server_url + '/public/refresh', {
           headers: {
@@ -131,6 +141,10 @@ class AppContainer extends Component {
             'Authorization': jwt
           }
         })
+
+        let user = getUser(this.props).data
+        console.log('user is ', user)
+        this.setState(user)
       }
     }
   }
@@ -160,7 +174,7 @@ class AppContainer extends Component {
                     <Menu pointing secondary>
                         {this.props.isAuthenticated ? (
                         <Menu.Item name='user'>
-                           <Icon name='user' circular /> {this.state.user.name}
+                           <Icon name='user' circular /> {this.state.user != undefined ? this.state.user.name : null}
                         </Menu.Item>) : null}
                         {/* <Menu.Item name='home' active={activeItem === 'home'} onClick={this.handleItemClick} />
                         <Menu.Item name='about' active={activeItem === 'about'} onClick={this.handleItemClick} />
@@ -173,6 +187,8 @@ class AppContainer extends Component {
                     </Menu>
                     <Route exact path="/" render={
                         (props) => (<AppHeader {...props}
+                                            bottleId={this.props.bottleId} 
+                                            bottleSelected={this.props.bottleSelected}
                                             isAuthenticated={this.props.isAuthenticated}
                                             toggleAuth={this.props.toggleAuth} />)
                         }/>
