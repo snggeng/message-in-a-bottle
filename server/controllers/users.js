@@ -16,7 +16,8 @@ const createUser = (req, res, next) => {
     let newUser = new User({
       username: req.body.username,
       password: req.body.password,
-      role: req.body.role
+      role: req.body.role,
+      display: req.body.display
     })
     if (req.body.first_name !== undefined) newUser.first_name = req.body.first_name
     if (req.body.last_name !== undefined) newUser.last_name = req.body.last_name
@@ -94,7 +95,7 @@ const updateUser = (req, res, next) => {
 
 // DELETE
 const deleteUser = (req, res, next) => {
-  User.findById({'_id' : req.params.id}, (err, user) => {
+  User.findById({'_id': req.params.id}, (err, user) => {
     if (err) return next(err)
 
     user.remove((err) => {
@@ -106,42 +107,42 @@ const deleteUser = (req, res, next) => {
 
 // SIGN IN
 const signIn = (req, res, next) => {
-    User.findOne({
-      username: req.body.username
-    }, async (err, user) => {
-      if (err) return next(err)
+  User.findOne({
+    username: req.body.username
+  }, async (err, user) => {
+    if (err) return next(err)
 
-      if (!user) {
-        // User not found
-        let error = new Error('Authentication failed. User not found.')
-        error.status = 401
-        error.type = 'user not found'
-        return next(error)
-        // res.status(401).send({success: false, message: 'Authentication failed. User not found.'})
-      } else if (user.netId && !req.body.sso) {
-        // NetID users cannot attempt local login
-        let error = new Error('Authentication failed. User not found. You must login using NetID.')
-        error.status = 401
-        error.type = 'netid user attempting local login'
-        return next(error)
+    if (!user) {
+      // User not found
+      let error = new Error('Authentication failed. User not found.')
+      error.status = 401
+      error.type = 'user not found'
+      return next(error)
+      // res.status(401).send({success: false, message: 'Authentication failed. User not found.'})
+    } else if (user.netId && !req.body.sso) {
+      // NetID users cannot attempt local login
+      let error = new Error('Authentication failed. User not found. You must login using NetID.')
+      error.status = 401
+      error.type = 'netid user attempting local login'
+      return next(error)
+    } else {
+      // check if password matches
+      // console.log('compare password', req.body.password)
+      let isMatch = await user.comparePassword(req.body.password)
+
+      if (isMatch) {
+        let token = jwt.sign(user.toObject(), config.secret, {expiresIn: '1d'})
+        res.json({success: true, token: token})
       } else {
-        // check if password matches
-        // console.log('compare password', req.body.password)
-        let isMatch = await user.comparePassword(req.body.password)
-
-        if (isMatch) {
-          let token = jwt.sign(user.toObject(), config.secret, {expiresIn: '1d'})
-          res.json({success: true, token: token})
-        } else {
-          console.log('wrong password')
-          let error = new Error('Authentication failed. Wrong password.')
-          error.status = 401
-          error.type = 'wrong password'
-          return next(error)
-          // res.status(401).json({success: false, message: 'Authentication failed. Wrong password.'})
-        }
+        console.log('wrong password')
+        let error = new Error('Authentication failed. Wrong password.')
+        error.status = 401
+        error.type = 'wrong password'
+        return next(error)
+        // res.status(401).json({success: false, message: 'Authentication failed. Wrong password.'})
       }
-    })
+    }
+  })
 }
 
 // SIGN OUT

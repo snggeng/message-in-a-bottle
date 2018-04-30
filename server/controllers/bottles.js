@@ -1,11 +1,9 @@
 // Models
 const Bottle = require('../models/bottle')
-// const User = require('../models/user')
+const User = require('../models/user')
 
 // Utils
 const { mapAsync } = require('../utils')
-
-Array.prototype.mapAsync = mapAsync
 
 // CREATE
 const createBottle = (req, res, next) => {
@@ -17,6 +15,7 @@ const createBottle = (req, res, next) => {
       message: req.body.message,
       createdBy: req.body.createdBy
     })
+    User.findByIdAndUpdate({_id: req.body.createdBy},{ $push: { bottles: newBottle._id }}, )
     // save bottle
     newBottle.save((err) => {
       if (err) return next(err)
@@ -86,7 +85,7 @@ const updateBottle = (req, res, next) => {
 
 // DELETE
 const deleteBottle = (req, res, next) => {
-  Bottle.findById({'_id': req.params.id}, (err, bottle) => {
+  Bottle.findById({'_id' : req.params.id}, (err, bottle) => {
     if (err) return next(err)
 
     bottle.remove((err) => {
@@ -98,11 +97,11 @@ const deleteBottle = (req, res, next) => {
 
 // GET BOTTLES BY USER
 const getBottlesByUser = async (req, res, next) => {
-  let usersBottles = await req.user.bottles.mapAsync(async (bottleId) =>
-    Bottle.findById({_id: bottleId}, (err, bottle) => {
-      if (err) return next(err)
-      return bottle
-    }))
+  let usersBottles = await req.user.bottles.mapAsync(async(bottleId) =>
+      await Bottle.findById({_id: bottleId}, (err, bottle) => {
+    if (err) return next(err)
+    return bottle
+  }))
 
   res.json(usersBottles)
 }

@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const mongoosePaginate = require('mongoose-paginate')
 const bcrypt = require('bcryptjs')
-const { errorMessage, setDateFields } = require('../utils')
+const { setDateFields } = require('../utils')
 
 const UserSchema = new Schema({
   username: {
@@ -17,7 +17,7 @@ const UserSchema = new Schema({
   role: {
     type: String,
     default: 'user',
-    enum: ['admin', 'manager', 'user'],
+    enum: ['admin', 'user'],
     required: true
   },
   netId: {
@@ -25,8 +25,17 @@ const UserSchema = new Schema({
     default: false,
     required: true
   },
+  color: {
+    type: String,
+    enum:['red', 'orange', 'yellow', 'olive', 'green', 'teal',
+      'blue', 'violet', 'purple', 'pink', 'brown', 'black'],
+    required: true
+  },
   bottles: {
     type: [String],
+  },
+  display: {
+    type: String
   },
   first_name: {
     type: String
@@ -47,7 +56,7 @@ UserSchema.plugin(mongoosePaginate)
 
 // Check if user is modified/new before saving
 // use bcrypt to salt and hash password
-UserSchema.pre('save', function(next) {
+UserSchema.pre('save', function (next) {
   let user = this // need to access this from outside so can't use fat arrow
   if (this.isModified('password') || this.isNew) {
     bcrypt.genSalt(10, (err, salt) => {
@@ -70,8 +79,8 @@ UserSchema.pre('save', function(next) {
 })
 
 // Verify user based on salt/hash result
-UserSchema.methods.comparePassword = async function(passw) {
-  return await bcrypt.compareSync(passw, this.password)
+UserSchema.methods.comparePassword = function (passw) {
+  return bcrypt.compareSync(passw, this.password)
 }
 
 module.exports = mongoose.model('User', UserSchema)

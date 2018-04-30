@@ -10,7 +10,7 @@ const BottleSchema = new Schema({
     required: true
   },
   message: {
-    type: String,
+    type: [String],
     required: true
   },
   createdBy: {

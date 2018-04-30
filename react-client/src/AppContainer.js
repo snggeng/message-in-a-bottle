@@ -168,7 +168,7 @@ class AppContainer extends Component {
     const { activeItem } = this.state
     return (
         <div>
-            <Container style={{paddingRight:'2rem', height: '100vh'}}>
+            <Container style={{paddingRight:'2rem', height: '100vh', maxHeight: '100vh', overflow: 'auto'}}>
                 <Router history={history}>
                     <div>
                     <Menu pointing secondary>
