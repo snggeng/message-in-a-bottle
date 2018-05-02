@@ -170,7 +170,7 @@ export default class Login extends Component {
                 </Segment>
                 </Form>
                 <Message>
-                New to us? <Link to={'/signup'}><a>Sign Up</a></Link>
+                New to us? <Link to={'/signup'} replace><a>Sign Up</a></Link>
                 </Message>
             </Grid.Column>
             </Grid>

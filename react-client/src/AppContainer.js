@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-    Router,
+    HashRouter as Router,
     Route,
     Redirect,
     Link
@@ -61,7 +61,7 @@ const AppHeader = (props) => (
                     <Icon name='arrow down' bordered />
                     {' arrow keys to move around the ocean.'}</h2>
                 <h2>{'Alternatively, '} 
-                    <Link to={'/login'}>
+                    <Link to={'/login'} >
                         <Button animated inverted color='teal'>
                             <Button.Content visible>Login</Button.Content>
                             <Button.Content hidden>
@@ -70,7 +70,7 @@ const AppHeader = (props) => (
                         </Button>
                     </Link>
                     {' or '}
-                    <Link to={'/signup'}>
+                    <Link to={'/signup'} >
                         <Button animated='vertical' inverted color='teal'>
                             <Button.Content visible>Sign Up</Button.Content>
                             <Button.Content hidden>
@@ -168,7 +168,7 @@ class AppContainer extends Component {
     return (
         <div>
             <Container style={{paddingRight:'2rem', height: '100vh', maxHeight: '100vh', overflow: 'auto'}}>
-                <Router history={history}>
+                <Router history={history} basename="/final-project-team-36">
                     <div>
                     <Menu pointing secondary>
                         {this.props.isAuthenticated && this.state.user != undefined ? (
