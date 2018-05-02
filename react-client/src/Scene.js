@@ -90,7 +90,8 @@ class SceneContainer extends Component {
                 <a-assets>
                     <img crossOrigin="anonymous" alt="sky" id="groundTexture" src="https://cdn.aframe.io/a-painter/images/floor.jpg"/>
                     <img crossOrigin="anonymous" alt="floor" id="skyTexture" src="https://cdn.aframe.io/a-painter/images/sky.jpg"/>
-                    <a-asset-item id="bottle-3d" src="glass_bottle/scene.gltf"></a-asset-item>
+                    {/* if building into production, add react-client/build in front of glass bottle if not, use  src="glass_bottle/scene.gltf" */}
+                    <a-asset-item id="bottle-3d" src="react-client/build/glass_bottle/scene.gltf"></a-asset-item>
                 </a-assets>
                 {/* <Entity primitive="a-light" type="ambient" color="#445451"/> */}
                 {/* <Entity primitive="a-light" type="point" intensity="2" position="2 4 4"/> */}
