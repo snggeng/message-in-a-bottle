@@ -5,23 +5,19 @@ This is the main repository for the CS 290 Final Project: `Message In a Bottle`.
 * Geng Sng (gs148)
 * Gerald Kora Kwok (gk72)
 
-Started: April 20th
-Finished: April 30th
-Hours: 100 hours
-Consulted with: NONE
-Online Resources: A-Frame documentation
-Assets: 3D bottles from https://sketchfab.com/models/beb69bc08a8f487ab8c5207fb155cbf2#download by Francesco Coldesina
+## Project Status
+* Started: April 20th
+* Finished: April 30th
+* Hours: 100 hours
+* Consulted with: NONE
+* Online Resources: [A-Frame documentation](https://aframe.io/docs/0.8.0/introduction/)
+* Assets: 3D bottles from https://sketchfab.com/models/beb69bc08a8f487ab8c5207fb155cbf2#download by Francesco Coldesina
 
-#### What makes your application useful 
+#### Why did we make this? 
 Our application is useful because it’s an platform that connects people all over the world, and allows them to express themselves. Anyone can create a bottle containing their message to the world, and view the messages others have created. Given a degree of Internet anonymity, what will users write? What legacies will they leave behind in their bottles? The possibilities are endless.
 
 #### References for your data that establishes its authenticity 
 All of our data are direct user inputs. The database is dynamic.
-
-#### Discuss both the pros and the cons of different framework possibilities you considered and why you made the decision you did (including choosing not to use any framework)
-We chose to use A-Frame to handle the WebVR experience because it was the best option for efficiently building virtual web environments. Compared to other 3D libraries such as three.js, A-Frame was much simpler to pick up in a short amount of time, given the relatively simplistic nature of its code – it’s essentially HTML, and the provided tutorials were very helpful. At the same time, A-Frame could easily be connected to Javascript, allowing us to link A-Frame elements with Javascript events and so forth. Furthermore, the A-Frame ecosystem had many community-built add-ons such as a physics and animation engine, due to the fact that its components system allowed the community to build and share such custom components; this allowed us to add features such oceans and animations. Finally, the framework is well-documented, and the Slack channel was very active (any questions we had were quickly answered by the community). After discovering all of these benefits through the Explore assignment, we easily agreed that A-Frame was the best framework option for our app’s WebVR component.
-
-In terms of the backend, we essentially used a stack that we were already very comfortable with.
 
 
 ## Stack
@@ -37,7 +33,7 @@ In terms of the backend, we essentially used a stack that we were already very c
 ## Getting Started
 #### Clone this project and change directory:
 ```
-git clone https://github.com/duke-compsci290-spring2018/final-project-team-36.git message-in-a-bottle
+git clone https://github.com/snggeng/message-in-a-bottle.git message-in-a-bottle
 cd message-in-a-bottle
 ```
 #### Install dependencies:
@@ -97,8 +93,8 @@ git push heroku master
 
 To get access to the database files, you can export them from mLab with the following commands:
 ```
-mongoexport -h ds263639.mlab.com:63639 -d heroku_2889j77f -c users -u heroku_2889j77f -p eccd4hqkadojkuqqqh3isnui36 -o /path/to/file.json
-mongoexport -h ds263639.mlab.com:63639 -d heroku_2889j77f -c bottles -u heroku_2889j77f -p eccd4hqkadojkuqqqh3isnui36 -o /path/to/file.json
+mongoexport -h <mlab-host:port> -d heroku_2889j77f -c users -u <heroku-user-id> -p <heroku-project-id> -o /path/to/file.json
+mongoexport -h <mlab-host:port> -d heroku_2889j77f -c bottles -u <heroku-user-id> -p <heroku-project-id> -o /path/to/file.json
 
 ```
 This will export a JSON of each collection `bottles` and `users`, which are the two collections we are using in our database. Remember to set the `/path/to/file` to where you want to save your JSON.
