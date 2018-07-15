@@ -17,14 +17,14 @@ class Signup extends Component {
   handleChange = (e, { name }) => {
     let user = this.state
     user[name] =  e.target.value 
-    console.log(user)
+    // console.log(user)
     this.setState(user)
   }
   
   handleColorChange = (e, { value }) => this.setState({color: value})
 
   handleCreateUser = async () => {
-    console.log('create user')
+    // console.log('create user')
     const response = await fetch(server_url + '/public/users', {
         method: 'post',
         headers: {

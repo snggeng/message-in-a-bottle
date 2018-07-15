@@ -21,7 +21,7 @@ class CreateBottle extends Component {
     event.target.name === 'name' ?
     bottle.name = event.target.value :
     bottle.message = event.target.value
-    console.log(bottle)
+    // console.log(bottle)
     this.setState(bottle)
   }
 
@@ -36,7 +36,7 @@ class CreateBottle extends Component {
       }],
       createdBy: user._id
     }
-    console.log('user id', user._id)
+    // console.log('user id', user._id)
     const response = await fetch(server_url + '/api/bottles', {
         method: 'post',
         headers: {

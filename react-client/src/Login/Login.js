@@ -66,7 +66,10 @@ export default class Login extends Component {
     // console.log(response)
     const body = await response.json()
     // console.log(body)
-    if (response.status !== 200) throw body
+    if (response.status !== 200) {
+      alert('wrong username or password')
+      throw body
+    }
 
     return body
   }
@@ -86,7 +89,7 @@ export default class Login extends Component {
       window.sessionStorage.setItem('token', res.token)
       // toggle authentication
       this.props.toggleAuth(true)
-      console.log(this.props.isAuthenticated)
+      // console.log(this.props.isAuthenticated)
       // console.log('Login Successful')
     })
     .catch(err => {

@@ -32,12 +32,12 @@ class App extends Component {
   toggleAuth = (isAuth) => {
     // toggle global variable
     auth.isAuthenticated = isAuth
-    console.log('is auth', isAuth)
+    // console.log('is auth', isAuth)
     this.setState(auth)
   }
 
   handleBottleSelect = (e) => {
-    console.log('selected', e.target.id)
+    // console.log('selected', e.target.id)
     this.setState({
       bottleSelected: true,
       bottleId: e.target.id
@@ -58,7 +58,7 @@ class App extends Component {
     const bottles = await response.json()
     // console.log(body)
     if (response.status !== 200) throw bottles
-    console.log('all bottles', bottles)
+    // console.log('all bottles', bottles)
     this.setState({ bottles })
     
   }
